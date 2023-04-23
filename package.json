@@ -1,0 +1,24 @@
+{
+  "name": "bezierjs",
+  "type": "module",
+  "exports": {
+    "./calculation": {
+      "import": "./dist/calculation.js",
+      "require": "./dist/calculation.cjs"
+    },
+    "./drawing": {
+      "import": "./dist/drawing.js",
+      "require": "./dist/drawing.cjs"
+    },
+    "./interaction": {
+      "import": "./dist/interaction.js",
+      "require": "./dist/interaction.cjs"
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "vite": "4.3.1"
+  }
+}
