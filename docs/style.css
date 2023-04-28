@@ -4,7 +4,7 @@
 }
 
 #doc-title {
-  margin: 3rem;
+  margin-top: 3rem;
 }
 
 #doc-description {
@@ -19,12 +19,19 @@
 }
 
 .demo {
-  margin-bottom: 2rem;
+  width: 80vw;
+  margin-bottom: 3rem;
 }
 
-p,
 .demo-title {
   margin: 0;
+}
+
+.demo>div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 3rem;
 }
 
 .example-type {
@@ -42,8 +49,7 @@ p,
 }
 
 .demo-example {
-  gap: 0.7rem;
-  margin: 1rem 0;
+  gap: 0.3rem;
 }
 
 canvas {
@@ -51,21 +57,35 @@ canvas {
   background: white;
 }
 
-.curve-type,
-.slider {
-  display: flex;
-  justify-content: left;
-  gap: 0.25rem;
-  white-space: nowrap;
-}
-
 .example-attributes {
   gap: 0.2rem;
   width: 100%;
 }
 
-.example-attributes>div,
-.slide-control,
-.example-attributes>input {
+.slider,
+.slide-control {
   width: 100%;
+}
+
+.slider {
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.restart-btn {
+  align-self: flex-end;
+  font-size: 0.7em;
+  background-color: transparent;
+  border: none;
+  color: #9c9c9c;
+  padding: 0;
+}
+
+.restart-btn:hover {
+  font-weight: bold;
+  color: black;
 }

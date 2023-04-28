@@ -1,29 +1,27 @@
-import CodeArea from "./CodeArea.js";
-import { Bezier } from "../../lib/bezier.js";
-import * as calculation from "../../dist/calculation.js";
-import * as drawing from "../../dist/drawing.js";
-import handleInteraction from "../../dist/interaction.js";
+const filesNames = [
+    "linear",
+    "quadratic",
+    "cubic",
+    "quadraticTangent",
+    "cubicTangent",
+    "openSubpath",
+    "closedSubpath"
+]
 
-
-const code = new CodeArea(250, 200, "Prova", "quadratic", "#demos-container");
-
-//calcolo
-const curve = new Bezier(10,10, 240,10, 10,190);
-let tangent = calculation.calculateTangent(curve, 0.5);
-//disegno
-drawing.setContext(code.context);
-const draw = () => {
-    drawing.drawSkeleton(curve);
-    drawing.drawCurve(curve);
-    drawing.drawTangent(curve, tangent, 0.5);
+for (let i = 0; i < filesNames.length; i++) {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = `./examples/${filesNames[i]}.js`;
+    document.head.appendChild(script);
 }
-draw();
-//interazione
-handleInteraction(code.canvas, curve, () => {
-    tangent = calculation.calculateTangent(curve, 0.5);
-    code.clear();
-    draw();
-})
+
+
+
+
+
+
+
+
 
 
 
@@ -55,7 +53,7 @@ handleInteraction(code.canvas, curve, () => {
 // var length = calculation.calculateLength(curve);
 // drawing.drawSkeleton(curve);
 // drawing.drawCurve(curve);
-// drawing.drawLength(curve, length, "blue"); 
+// drawing.drawLength(curve, length, "blue");
 
 
 

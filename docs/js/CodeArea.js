@@ -1,48 +1,63 @@
 export default class CodeArea {
     static count = 0;
+    #w;
+    #h;
+    #cvs;
+    #ctx;
 
-    constructor(w, h, title, type, target) {
+    constructor(w, h, target, type, restart, params) {
         const id = ++CodeArea.count;
-        this.w = w;
-        this.h = h;
+        this.#w = w;
+        this.#h = h;
+
+        let sliders = "";
+        params?.forEach(p => {
+            sliders += `<div class="slider">
+                <label class="slider-value">${p.name}: <span>${p.value}</span></label>
+                <input class="slide-control" type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.value}" />
+            </div>`
+        })
+
         const container = document.querySelector(target);
         container.insertAdjacentHTML('beforeend', `
-        <section id="demo-${id}" class="demo">
-            <h3 class="demo-title">${title}</h3>
-            <div class="demo-example">
+            <div class="demo-example" id="example-${id}">
                 <p class="example-type">${type}</p>
                 <canvas width=${w} height=${h}></canvas>
                 <div class="example-attributes">
-                    <div class="slider">
-                        <div class="slider-value">t: 0.5</div>
-                        <input type="range" min="0" max="1" step="0.01" value="0.5" class="slide-control" />
-                    </div>
                     <button class="restart-btn">Restart</button>
+                    ${sliders}
                 </div>
-            </div>
-        </section>`)
+            </div>`);
 
-        const section = container.querySelector(`#demo-${id}`);
-        this.cvs = section.querySelector("canvas");
-        this.ctx = this.cvs.getContext("2d");
-        section.querySelector("button").addEventListener("click", () => {
-            this.restart()
+        const example = container.querySelector(`#example-${id}`);
+        const cvs = (this.#cvs = example.querySelector("canvas"));
+        this.#ctx = cvs.getContext("2d");
+
+        example.querySelector("button").addEventListener("click", () => {
+            example.querySelectorAll(".slider").forEach((slider, i) => {
+                slider.querySelector("span").innerHTML = slider.querySelector("input").value =  params[i].value;
+            })
+            restart()
+        })
+        example.querySelectorAll(".slider").forEach((slider, i) => {
+            const span = slider.querySelector("span");
+            slider.querySelector("input").addEventListener("input", (e) => {
+                const currValue = e.target.value;
+                span.innerHTML = currValue;
+                params[i].handler(currValue);
+            })
         })
     }
 
     get canvas() {
-        return this.cvs;
+        return this.#cvs;
     }
 
     get context() {
-        return this.ctx;
+        return this.#ctx;
     }
 
     clear() {
-        this.ctx.clearRect(0, 0, this.w, this.h);
-    }
-
-    restart() {
-        // to do
+        this.context.clearRect(0, 0, this.#w, this.#h);
     }
 }

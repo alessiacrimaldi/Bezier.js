@@ -5,6 +5,7 @@
     <title>Bezier.js Documentation</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./js/loader.js" defer></script>
 </head>
 
 <body>
@@ -15,8 +16,25 @@
         library. Click and drag on the endpoints of the demo curves to visualize the various Bezier utilities and
         functions.
     </p>
-    <div id="demos-container"></div>
 
+    <div id="demos-container">
+
+        <h2>Bezier</h2>
+        <section class="demo">
+            <h3 class="demo-title">Constructor</h3>
+            <div id="constructor"></div>
+        </section>
+        <section class="demo">
+            <h3 class="demo-title">Tangent</h3>
+            <div id="tangent"></div>
+        </section>
+
+        <h2>Subpaths</h2>
+        <section class="demo">
+            <h3 class="demo-title">Constructor</h3>
+            <div id="path-constructor"></div>
+        </section>
+
+    </div>
 </body>
-<script type="module" src="./js/index.js"></script>
 </html>
