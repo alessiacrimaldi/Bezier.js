@@ -424,9 +424,6 @@ class G {
   }
   // setJoinC_0() {
   //   // to do --> se discordi, fare il punto medio
-  //   for (let i=0; i<this.curves.length; i++) {
-  //     if ()
-  //   }
   // }
   valueOf() {
     return this.toString();

@@ -3,28 +3,22 @@
   "type": "module",
   "exports": {
     "./calculation": {
-      "import": "./dist/calculation.js",
-      "require": "./dist/calculation.cjs"
+      "import": "./docs/dist/calculation.js",
+      "require": "./docs/dist/calculation.cjs"
     },
     "./drawing": {
-      "import": "./dist/drawing.js",
-      "require": "./dist/drawing.cjs"
+      "import": "./docs/dist/drawing.js",
+      "require": "./docs/dist/drawing.cjs"
     },
     "./interaction": {
-      "import": "./dist/interaction.js",
-      "require": "./dist/interaction.cjs"
+      "import": "./docs/dist/interaction.js",
+      "require": "./docs/dist/interaction.cjs"
     }
   },
   "files": [
-    "dist/*"
+    "docs/dist/*"
   ],
   "devDependencies": {
-    "vite": "4.3.1",
-    "copyfiles": "^2.4.1",
-    "onchange": "^7.1.0"
-  },
-  "scripts": {
-    "build": "vite build && npx copyfiles -f dist/**/* docs/dist",
-    "watch": "onchange 'lib/*.js' -- npm run build"
+    "vite": "4.3.1"
   }
 }
