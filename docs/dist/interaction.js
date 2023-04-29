@@ -1,20 +1,21 @@
-function x(s, i, u) {
-  let o = !1, a = 0, f = 0, d = 0, r = 0, t;
-  const l = i.points, m = (e) => Math.abs(a - e.x) < 10 && Math.abs(f - e.y) < 10;
-  s.addEventListener("mousedown", (e) => {
-    a = e.offsetX, f = e.offsetY, l.forEach((n) => {
-      if (m(n)) {
-        o = !0, t = n, d = n.x, r = n.y;
+function m(t, f, u) {
+  const x = t.getContext("2d");
+  let s = !1, a = 0, i = 0, d = 0, r = 0, n;
+  const h = f.points, l = (e) => Math.abs(a - e.x) < 10 && Math.abs(i - e.y) < 10;
+  t.addEventListener("mousedown", (e) => {
+    a = e.offsetX, i = e.offsetY, h.forEach((o) => {
+      if (l(o)) {
+        s = !0, n = o, d = o.x, r = o.y;
         return;
       }
     });
-  }), s.addEventListener("mousemove", (e) => {
-    o && (t.x = d + (e.offsetX - a), t.y = r + (e.offsetY - f), i.update(), u());
-  }), s.addEventListener("mouseup", (e) => {
-    o = !1, t = void 0;
+  }), t.addEventListener("mousemove", (e) => {
+    s && (n.x = d + (e.offsetX - a), n.y = r + (e.offsetY - i), f.update(), x.clearRect(0, 0, t.width, t.height), u());
+  }), t.addEventListener("mouseup", (e) => {
+    s = !1, n = void 0;
   });
 }
 export {
-  x as default
+  m as default
 };
 //# sourceMappingURL=interaction.js.map

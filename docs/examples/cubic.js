@@ -7,6 +7,7 @@ import handleInteraction from "../dist/interaction.js";
 /* Documentation Example */
 const demo = new CodeArea(250, 200, "#constructor", "Cubic", () => {
     setup();
+    demo.clear();
     draw();
 });
 
@@ -17,7 +18,7 @@ const drawing = new Drawing(demo.context)
 
 const setup = () => {
     curve = new Bezier(120, 25, 60, 90, 140, 90, 180, 180);
-
+    // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
         draw();
     })
@@ -25,7 +26,6 @@ const setup = () => {
 setup();
 
 const draw = () => {
-    demo.clear();
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
 }

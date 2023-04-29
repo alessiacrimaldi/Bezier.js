@@ -7,6 +7,7 @@ import handleInteraction from "../dist/interaction.js";
 /* Documentation Example */
 const demo = new CodeArea(250, 200, "#path-constructor", "Closed PolyBezier", () => {
     setup();
+    demo.clear();
     draw();
 });
 
@@ -25,7 +26,7 @@ const setup = () => {
         new Bezier({ x: 90, y: 90 }, { x: 125, y: 90 }, { x: 125, y: 40 }, { x: 90, y: 40 })
     ];
     subpath = new Bezier.PolyBezier(curves);
-
+    // makes the curves interactive
     subpath.curves.forEach(curve => {
         handleInteraction(demo.canvas, curve, () => {
             draw();
@@ -35,7 +36,6 @@ const setup = () => {
 setup();
 
 const draw = () => {
-    demo.clear();
     subpath.curves.forEach(curve => {
         drawing.drawSkeleton(curve);
         drawing.drawCurve(curve);

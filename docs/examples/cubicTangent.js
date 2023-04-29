@@ -15,12 +15,14 @@ const params = [
         step: 0.01,
         handler: (new_t) => {
             calculation.calculateTangent(curve, t = new_t);
+            demo.clear();
             draw();
         }
     },
 ]
 const demo = new CodeArea(250, 200, "#tangent", "Cubic", () => {
     setup();
+    demo.clear();
     draw();
 }, params);
 
@@ -32,7 +34,7 @@ const drawing = new Drawing(demo.context)
 const setup = () => {
     curve = new Bezier(120, 25, 60, 90, 140, 90, 180, 180);
     calculation.calculateTangent(curve, t = 0.5);
-
+    // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
         calculation.calculateTangent(curve, t);
         draw();
@@ -41,7 +43,6 @@ const setup = () => {
 setup();
 
 const draw = () => {
-    demo.clear();
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
     drawing.drawTangent(curve);
