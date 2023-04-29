@@ -1,11 +1,11 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../../lib/bezier.js";
-import Drawing from "../../lib/drawing.js";
+import Drawing from "../../dist/drawing.js";
 import handleInteraction from "../../dist/interaction.js";
 
 
 /* Documentation Example */
-const demo = new CodeArea(250, 200, "#path-constructor", "Open Subpath", () => {
+const demo = new CodeArea(250, 200, "#path-constructor", "Open PolyBezier", () => {
     setup();
     draw();
 });
