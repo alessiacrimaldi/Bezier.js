@@ -1,16 +1,17 @@
-var k = (x, t, i) => {
+var p = (x, t, i) => {
   if (!t.has(x))
     throw TypeError("Cannot " + i);
 };
-var h = (x, t, i) => (k(x, t, "read from private field"), i ? i.call(x) : t.get(x)), y = (x, t, i) => {
+var h = (x, t, i) => (p(x, t, "read from private field"), i ? i.call(x) : t.get(x)), y = (x, t, i) => {
   if (t.has(x))
     throw TypeError("Cannot add the same private member more than once");
   t instanceof WeakSet ? t.add(x) : t.set(x, i);
-}, v = (x, t, i, r) => (k(x, t, "write to private field"), r ? r.call(x, i) : t.set(x, i), i);
-var P = (x, t, i) => (k(x, t, "access private method"), i);
-import { calculateCurvePoints as L, getOffsetCurve as p, getCurvePoint as o, calculateNormal as g } from "./calculation.js";
+}, v = (x, t, i, r) => (p(x, t, "write to private field"), r ? r.call(x, i) : t.set(x, i), i);
+var P = (x, t, i) => (p(x, t, "access private method"), i);
+import { calculateCurvePoints as L, getOffsetCurve as k, getCurvePoint as o, calculateNormal as g } from "./calculation.js";
+import "./bezier.js";
 var c, w, T, m, f, C;
-class O {
+class R {
   constructor(t) {
     y(this, T);
     y(this, f);
@@ -47,10 +48,10 @@ class O {
     this.drawPoints(t, i, r);
   }
   drawLength(t, i, r = "red") {
-    var e = p(t, -10), s = e.length - 1;
+    var e = k(t, -10), s = e.length - 1;
     e.forEach((a, n) => {
       if (this.drawCurve(a, r), n === s) {
-        let d = p(t, 0.95, -15), l = o(a, 1), S = p(t, 0.95, -5);
+        let d = k(t, 0.95, -15), l = o(a, 1), S = k(t, 0.95, -5);
         this.drawLine(d, l, r), this.drawLine(l, S, r);
         let E = (100 * i | 0) / 100 + "px";
         this.drawText(E, { x: l.x + 7, y: l.y - 3 });
@@ -208,6 +209,6 @@ c = new WeakMap(), w = new WeakMap(), T = new WeakSet(), m = function() {
   return i = i.replace("hsl(", "hsla(").replace(")", "," + t + ")"), i;
 };
 export {
-  O as default
+  R as default
 };
 //# sourceMappingURL=drawing.js.map

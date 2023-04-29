@@ -1,8 +1,8 @@
 import CodeArea from "../js/CodeArea.js";
-import { Bezier } from "../../lib/bezier.js";
-import * as calculation from "../../dist/calculation.js";
-import Drawing from "../../dist/drawing.js";
-import handleInteraction from "../../dist/interaction.js";
+import { Bezier } from "../dist/bezier.js";
+import * as calculation from "../dist/calculation.js";
+import Drawing from "../dist/drawing.js";
+import handleInteraction from "../dist/interaction.js";
 
 
 /* Documentation Example */

@@ -7,11 +7,12 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: {
+                bezier: "./lib/bezier.js",
                 calculation: "./lib/calculation.js",
                 drawing: "./lib/drawing.js",
                 interaction: "./lib/interaction.js"
             },
-            formats: ["es", "cjs"]
+            formats: ["es"]
         },
     },
 })
