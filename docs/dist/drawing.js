@@ -1,35 +1,69 @@
-var T = (o, t, i) => {
-  if (!t.has(o))
+var p = (d, t, i) => {
+  if (!t.has(d))
     throw TypeError("Cannot " + i);
 };
-var h = (o, t, i) => (T(o, t, "read from private field"), i ? i.call(o) : t.get(o)), y = (o, t, i) => {
-  if (t.has(o))
+var c = (d, t, i) => (p(d, t, "read from private field"), i ? i.call(d) : t.get(d)), v = (d, t, i) => {
+  if (t.has(d))
     throw TypeError("Cannot add the same private member more than once");
-  t instanceof WeakSet ? t.add(o) : t.set(o, i);
-}, v = (o, t, i, r) => (T(o, t, "write to private field"), r ? r.call(o, i) : t.set(o, i), i);
-var l = (o, t, i) => (T(o, t, "access private method"), i);
-import { getOffsetCurve as C, getCurvePoint as d, calculateNormal as g } from "./calculation.js";
+  t instanceof WeakSet ? t.add(d) : t.set(d, i);
+};
+import { getOffsetCurve as f, getCurvePoint as n, calculateNormal as P } from "./calculation.js";
 import "./bezier.js";
-var c, w, p, k, f, m;
-class I {
+var h, w;
+class b {
   constructor(t) {
-    y(this, p);
-    y(this, f);
-    y(this, c, void 0);
-    y(this, w, void 0);
-    this.ctx = t, v(this, c, []), v(this, w, 0);
-    for (var i = 0, r; i < 360; i++)
-      r = i * 47 % 360, h(this, c).push("hsl(" + r + ",50%,50%)");
+    v(this, h, [
+      "#FF0000",
+      "#FF7F00",
+      "#FFFF00",
+      "#00FF00",
+      "#0000FF",
+      "#4B0082",
+      "#8F00FF"
+    ]);
+    v(this, w, [
+      "rgba(255, 0, 0, 0.5)",
+      // rosso
+      "rgba(255, 128, 0, 0.5)",
+      // arancione
+      "rgba(255, 255, 0, 0.5)",
+      // giallo
+      "rgba(128, 255, 0, 0.5)",
+      // verde chiaro
+      "rgba(0, 255, 0, 0.5)",
+      // verde
+      "rgba(0, 255, 128, 0.5)",
+      // verde acqua
+      "rgba(0, 255, 255, 0.5)",
+      // ciano
+      "rgba(0, 128, 255, 0.5)",
+      // blu chiaro
+      "rgba(0, 0, 255, 0.5)",
+      // blu
+      "rgba(128, 0, 255, 0.5)",
+      // viola
+      "rgba(255, 0, 255, 0.5)",
+      // magenta
+      "rgba(255, 0, 128, 0.5)",
+      // rosa
+      "rgba(255, 128, 128, 0.5)",
+      // rosa chiaro
+      "rgba(255, 0, 192, 0.5)",
+      // rosa scuro
+      "rgba(128, 128, 128, 0.5)"
+      // grigio
+    ]);
+    this.ctx = t;
   }
   /* BASIC DRAWING METHODS */
   drawLine(t, i, r = "lightgrey") {
     this.ctx.strokeStyle = r, this.ctx.beginPath(), this.ctx.moveTo(t.x, t.y), this.ctx.lineTo(i.x, i.y), this.ctx.stroke(), this.ctx.closePath();
   }
   drawPoints(t, i, r) {
-    t.forEach((e) => this.drawPoint(e, i, r));
+    t.forEach((a) => this.drawPoint(a, i, r));
   }
-  drawPoint(t, i = 3.5, r = "black", e = "transparent") {
-    this.ctx.strokeStyle = r, this.ctx.fillStyle = e, this.ctx.beginPath(), this.ctx.arc(t.x, t.y, i, 0, 2 * Math.PI), this.ctx.fill(), this.ctx.stroke(), this.ctx.closePath();
+  drawPoint(t, i = 3.5, r = "black", a = "transparent") {
+    this.ctx.strokeStyle = r, this.ctx.fillStyle = a, this.ctx.beginPath(), this.ctx.arc(t.x, t.y, i, 0, 2 * Math.PI), this.ctx.fill(), this.ctx.stroke(), this.ctx.closePath();
   }
   drawSkeleton(t, i) {
     var r = t.points;
@@ -37,8 +71,8 @@ class I {
   }
   drawCurve(t, i = "black", r = 0.1) {
     this.ctx.strokeStyle = i, this.ctx.beginPath();
-    var e = t.points;
-    this.ctx.moveTo(e[0].x, e[0].y), t.curvepoints.length == 0 && t.computeCurvePoints(), this.drawPoints(t.curvepoints, r, i), this.ctx.stroke(), this.ctx.closePath();
+    var a = t.points;
+    this.ctx.moveTo(a[0].x, a[0].y), t.curvepoints.length == 0 && t.computeCurvePoints(), this.drawPoints(t.curvepoints, r, i), this.ctx.stroke(), this.ctx.closePath();
   }
   drawText(t, i) {
     i = i || { x: 0, y: 0 }, this.ctx.fillText(t, i.x, i.y);
@@ -48,13 +82,13 @@ class I {
     this.drawPoints(t, i, r);
   }
   drawLength(t, i, r = "red") {
-    var e = C(t, -10), s = e.length - 1;
-    e.forEach((a, n) => {
-      if (this.drawCurve(a, r), n === s) {
-        let x = C(t, 0.95, -15), P = d(a, 1), S = C(t, 0.95, -5);
-        this.drawLine(x, P, r), this.drawLine(P, S, r);
-        let E = (100 * i | 0) / 100 + "px";
-        this.drawText(E, { x: P.x + 7, y: P.y - 3 });
+    var a = f(t, -10), e = a.length - 1;
+    a.forEach((s, o) => {
+      if (this.drawCurve(s, r), o === e) {
+        let x = f(t, 0.95, -15), y = n(s, 1), g = f(t, 0.95, -5);
+        this.drawLine(x, y, r), this.drawLine(y, g, r);
+        let T = (100 * i | 0) / 100 + "px";
+        this.drawText(T, { x: y.x + 7, y: y.y - 3 });
       }
     });
   }
@@ -62,46 +96,46 @@ class I {
     this.drawPoint(t, i, r);
   }
   drawTangent(t, i = "red") {
-    var r = d(t, t._derivative.t), e = t._derivative;
-    this.drawPoint(r, 2, "red"), this.drawLine(r, { x: r.x + e.x, y: r.y + e.y }, i);
+    var r = n(t, t._derivative.t), a = t._derivative;
+    this.drawPoint(r, 2, "red"), this.drawLine(r, { x: r.x + a.x, y: r.y + a.y }, i);
   }
-  drawTangents(t, i, r, e = "red") {
-    for (var s = 0, a = 0, n; s <= 1; s += r, a++)
-      n = d(t, s), this.drawLine(n, { x: n.x + i[a].x, y: n.y + i[a].y }, e);
+  drawTangents(t, i, r, a = "red") {
+    for (var e = 0, s = 0, o; e <= 1; e += r, s++)
+      o = n(t, e), this.drawLine(o, { x: o.x + i[s].x, y: o.y + i[s].y }, a);
   }
-  drawNormal(t, i, r, e = 20, s = "red") {
-    var a = d(t, r);
-    this.drawLine(a, { x: a.x + e * i.x, y: a.y + e * i.y }, s);
+  drawNormal(t, i, r, a = 20, e = "red") {
+    var s = n(t, r);
+    this.drawLine(s, { x: s.x + a * i.x, y: s.y + a * i.y }, e);
   }
-  drawNormals(t, i, r, e = 20, s = "red") {
-    for (var a = 0, n = 0; a <= 1; a += r, n++) {
-      var x = d(t, a);
-      this.drawLine(x, { x: x.x + e * i[n].x, y: x.y + e * i[n].y }, s);
+  drawNormals(t, i, r, a = 20, e = "red") {
+    for (var s = 0, o = 0; s <= 1; s += r, o++) {
+      var x = n(t, s);
+      this.drawLine(x, { x: x.x + a * i[o].x, y: x.y + a * i[o].y }, e);
     }
   }
-  drawSplittedCurve(t, i, r = "red", e, s) {
-    s ? (this.drawCurve(i, r), this.drawPoint(d(t, e), 3, r), this.drawPoint(d(t, s), 3, r)) : (this.drawCurve(i[0], r), this.drawCurve(i[1], r), this.drawPoint(d(t, e), 3, r));
+  drawSplittedCurve(t, i, r = "red", a, e) {
+    e ? (this.drawCurve(i, r), this.drawPoint(n(t, a), 3, r), this.drawPoint(n(t, e), 3, r)) : (this.drawCurve(i[0], r), this.drawCurve(i[1], r), this.drawPoint(n(t, a), 3, r));
   }
-  drawCurveExtremas(t, i, r = 3, e = "red") {
-    this.ctx.strokeStyle = e, i.values.forEach((s) => {
-      let a = d(t, s);
-      this.drawPoint(a, r, e);
+  drawCurveExtremas(t, i, r = 3, a = "red") {
+    this.ctx.strokeStyle = a, i.values.forEach((e) => {
+      let s = n(t, e);
+      this.drawPoint(s, r, a);
     });
   }
-  drawInflectionPoints(t, i, r = 3, e = "red") {
-    this.ctx.strokeStyle = e, i.forEach((s) => {
-      let a = d(t, s);
-      this.drawPoint(a, r, e);
+  drawInflectionPoints(t, i, r = 3, a = "red") {
+    this.ctx.strokeStyle = a, i.forEach((e) => {
+      let s = n(t, e);
+      this.drawPoint(s, r, a);
     });
   }
-  drawCurvature(t, i, r, e = "#ff7f33") {
-    var s = d(t, r), a = g(t, r);
-    this.drawLine(s, { x: s.x + a.x * i.k * 5e3, y: s.y + a.y * i.k * 5e3 }, e);
+  drawCurvature(t, i, r, a = "#ff7f33") {
+    var e = n(t, r), s = P(t, r);
+    this.drawLine(e, { x: e.x + s.x * i.k * 5e3, y: e.y + s.y * i.k * 5e3 }, a);
   }
   drawCurvatures(t, i, r = 2) {
-    for (var e = 0, s = 0; e < 256; e += r, s++) {
-      let a = e / 255, n = d(t, a), x = g(t, a, !0);
-      this.drawLine(n, { x: n.x + x.x * i[s].k * 5e3, y: n.y + x.y * i[s].k * 5e3 }, "rgba(255,127," + e + ",0.6)");
+    for (var a = 0, e = 0; a < 256; a += r, e++) {
+      let s = a / 255, o = n(t, s), x = P(t, s, !0);
+      this.drawLine(o, { x: o.x + x.x * i[e].k * 5e3, y: o.y + x.y * i[e].k * 5e3 }, "rgba(255,127," + a + ",0.6)");
     }
   }
   drawBoundingBox(t, i = "red") {
@@ -113,47 +147,47 @@ class I {
   drawProjection(t, i, r = "red") {
     this.drawLine(t, i, r);
   }
-  drawOffsetCurve(t, i = "red") {
-    t.forEach((r) => this.drawCurve(r, i));
+  drawOffsetCurve(t, i) {
+    t.forEach((r, a) => this.drawCurve(r, i || c(this, h)[a]));
   }
   drawOffsetPoint(t, i = "red") {
     this.drawPoint(t, 4, i);
   }
   drawReducedCurve(t, i) {
-    t.forEach((r, e) => {
-      e > 0 && this.drawPoint(r.points[0], 3), this.drawCurve(r, i || l(this, p, k).call(this));
+    t.forEach((r, a) => {
+      a > 0 && this.drawPoint(r.points[0], 3), this.drawCurve(r, i || c(this, h)[a]);
     });
   }
   drawCircularArcs(t, i) {
-    t.forEach((r) => this.drawArc(r, i));
+    t.forEach((r, a) => this.drawArc(r, i || c(this, w)[a]));
   }
-  drawArc(t, i = l(this, f, m).call(this, 0.1)) {
+  drawArc(t, i) {
     this.ctx.fillStyle = i, this.ctx.beginPath(), this.ctx.moveTo(t.x, t.y), this.ctx.arc(t.x, t.y, t.r, t.s, t.e), this.ctx.lineTo(t.x, t.y), this.ctx.fill(), this.ctx.stroke(), this.ctx.closePath();
   }
   drawScaledCurve(t, i, r) {
     this.drawReducedCurve(t, "black");
-    for (var e = 0; e <= 6; e++)
-      this.drawCurve(i[e], r);
+    for (var a = 0; a <= 6; a++)
+      this.drawCurve(i[a], r);
   }
-  drawCurveOutline(t, i = "red", r, e = "rgba(0,0,255,0.2)") {
-    t.curves.forEach((s) => this.drawCurve(s, i)), r && (r.pos.curves.forEach((s) => this.drawCurve(s, e)), r.neg.curves.forEach((s) => this.drawCurve(s, e)));
+  drawCurveOutline(t, i = "red", r, a = "rgba(0,0,255,0.2)") {
+    t.curves.forEach((e) => this.drawCurve(e, i)), r && (r.pos.curves.forEach((e) => this.drawCurve(e, a)), r.neg.curves.forEach((e) => this.drawCurve(e, a)));
   }
   drawCurveGradOutline(t, i = "red") {
     t.curves.forEach((r) => this.drawCurve(r, i));
   }
   drawShapedOutline(t, i, r) {
-    t.forEach((e) => this.drawShape(e, i, r));
+    t.forEach((a, e) => this.drawShape(a, i, r || c(this, w)[e]));
   }
-  drawShape(t, i = "red", r = l(this, f, m).call(this, 0.2)) {
+  drawShape(t, i = "red", r) {
     this.ctx.strokeStyle = i, this.ctx.fillStyle = r;
-    var e = t.forward.points.length - 1, s = t.startcap.points.length, a = t.endcap.points.length;
+    var a = t.forward.points.length - 1, e = t.startcap.points.length, s = t.endcap.points.length;
     this.ctx.beginPath(), this.ctx.moveTo(
       t.startcap.points[0].x,
       t.startcap.points[0].y
     ), this.ctx.lineTo(
-      t.startcap.points[s - 1].x,
-      t.startcap.points[s - 1].y
-    ), e === 3 ? this.ctx.bezierCurveTo(
+      t.startcap.points[e - 1].x,
+      t.startcap.points[e - 1].y
+    ), a === 3 ? this.ctx.bezierCurveTo(
       t.forward.points[1].x,
       t.forward.points[1].y,
       t.forward.points[2].x,
@@ -166,9 +200,9 @@ class I {
       t.forward.points[2].x,
       t.forward.points[2].y
     ), this.ctx.lineTo(
-      t.endcap.points[a - 1].x,
-      t.endcap.points[a - 1].y
-    ), e === 3 ? this.ctx.bezierCurveTo(
+      t.endcap.points[s - 1].x,
+      t.endcap.points[s - 1].y
+    ), a === 3 ? this.ctx.bezierCurveTo(
       t.back.points[1].x,
       t.back.points[1].y,
       t.back.points[2].x,
@@ -182,33 +216,27 @@ class I {
       t.back.points[2].y
     ), this.ctx.closePath(), this.ctx.fill(), this.ctx.stroke();
   }
-  drawSelfIntersection(t, i, r = 4, e = "red") {
-    t.order != 2 && i.forEach((s) => {
-      var a = s.split("/").map((x) => parseFloat(x)), n = d(t, a[0]);
-      this.drawPoint(n, r, e, "white");
+  drawSelfIntersection(t, i, r = 4, a = "red") {
+    t.order != 2 && i.forEach((e) => {
+      var s = e.split("/").map((x) => parseFloat(x)), o = n(t, s[0]);
+      this.drawPoint(o, r, a, "white");
     });
   }
-  drawLineIntersection(t, i, r = 4, e = "red") {
-    i.forEach((s) => {
-      var a = d(t, s);
-      this.drawPoint(a, r, e, "white");
+  drawLineIntersection(t, i, r = 4, a = "red") {
+    i.forEach((e) => {
+      var s = n(t, e);
+      this.drawPoint(s, r, a, "white");
     });
   }
-  drawCurvesIntersection(t, i, r = 4, e = "red") {
-    i.forEach((s) => {
-      var a = s.split("/").map((x) => parseFloat(x)), n = d(t, a[0]);
-      this.drawPoint(n, r, e, "white");
+  drawCurvesIntersection(t, i, r = 4, a = "red") {
+    i.forEach((e) => {
+      var s = e.split("/").map((x) => parseFloat(x)), o = n(t, s[0]);
+      this.drawPoint(o, r, a, "white");
     });
   }
 }
-c = new WeakMap(), w = new WeakMap(), p = new WeakSet(), k = function() {
-  return v(this, w, (h(this, w) + 1) % h(this, c).length), h(this, c)[this.randomIndex];
-}, f = new WeakSet(), m = function(t) {
-  v(this, w, (h(this, w) + 1) % h(this, c).length), t = typeof t > "u" ? 1 : t;
-  var i = h(this, c)[h(this, w)];
-  return i = i.replace("hsl(", "hsla(").replace(")", "," + t + ")"), i;
-};
+h = new WeakMap(), w = new WeakMap();
 export {
-  I as default
+  b as default
 };
 //# sourceMappingURL=drawing.js.map

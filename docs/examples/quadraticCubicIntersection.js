@@ -18,7 +18,7 @@ let curve1, curve2, intersection;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
-    curve1 = new Bezier(160, 40, 90, 30, 115, 150);
+    curve1 = new Bezier(160, 50, 90, 40, 115, 160);
     curve2 = new Bezier(80, 30, 30, 140, 190, 60, 150, 170);
     intersection = calculation.calculateIntersection(curve1, curve2);
     // makes the curve interactive

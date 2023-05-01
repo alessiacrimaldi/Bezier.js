@@ -18,7 +18,7 @@ let curve, bbox;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
-    curve = new Bezier(160, 40, 90, 30, 115, 150);
+    curve = new Bezier(160, 50, 90, 40, 115, 160);
     bbox = calculation.calculateBoundingBox(curve);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {

@@ -9,18 +9,18 @@ import handleInteraction from "../dist/interaction.js";
 const params = [
     {
         name: "t",
-        min: 0,
-        max: 1,
-        value: 0.5,
-        step: 0.01,
+        min: -30,
+        max: 30,
+        value: 15,
+        step: 1,
         handler: (new_value) => {
-            calculation.calculateTangent(curve, t = new_value);
+            offcurve = calculation.calculateOffset(curve, t = new_value);
             demo.clear();
             draw();
         }
     },
 ]
-const demo = new CodeArea(250, 200, "#tangent", "Cubic", () => {
+const demo = new CodeArea(250, 200, "#offset", "Quadratic", () => {
     setup();
     demo.clear();
     draw();
@@ -28,15 +28,15 @@ const demo = new CodeArea(250, 200, "#tangent", "Cubic", () => {
 
 
 /* User Code */
-let curve, t;
+let curve, offcurve, t;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
-    curve = new Bezier(120, 25, 60, 90, 140, 90, 180, 180);
-    calculation.calculateTangent(curve, t = 0.5);
+    curve = new Bezier(160, 50, 90, 40, 115, 160);
+    offcurve = calculation.calculateOffset(curve, t = 15);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        calculation.calculateTangent(curve, t);
+        offcurve = calculation.calculateOffset(curve, t = 15);
         draw();
     })
 }
@@ -45,6 +45,6 @@ setup();
 const draw = () => {
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
-    drawing.drawTangent(curve);
+    drawing.drawOffsetCurve(offcurve);
 }
 draw();

@@ -22,9 +22,16 @@ const filesNames = [
   "quadraticProjection",
   "cubicProjection",
 
+  "linearOffset",
+  "quadraticOffset",
+  "cubicOffset",
+
   "linearTangent",
   "quadraticTangent",
   "cubicTangent",
+
+  "quadraticArcs",
+  "cubicArcs",
 
   "openPolyBezier",
   "closedPolyBezier"

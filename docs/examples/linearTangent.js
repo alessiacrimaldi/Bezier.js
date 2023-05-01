@@ -13,8 +13,8 @@ const params = [
         max: 1,
         value: 0.5,
         step: 0.01,
-        handler: (new_t) => {
-            calculation.calculateTangent(curve, t = new_t);
+        handler: (new_value) => {
+            calculation.calculateTangent(curve, t = new_value);
             demo.clear();
             draw();
         }
