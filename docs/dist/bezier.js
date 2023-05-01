@@ -2,7 +2,7 @@ const { abs: b, cos: S, sin: U, acos: K, atan2: J, sqrt: N, pow: M } = Math;
 function $(c) {
   return c < 0 ? -M(-c, 1 / 3) : M(c, 1 / 3);
 }
-const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER || 9007199254740991, Y = Number.MIN_SAFE_INTEGER || -9007199254740991, tt = { x: 0, y: 0, z: 0 }, h = {
+const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER || 9007199254740991, Y = Number.MIN_SAFE_INTEGER || -9007199254740991, tt = { x: 0, y: 0, z: 0 }, l = {
   // Legendre-Gauss abscissae with n=24 (x_i values, defined at i=n as the roots of the nth order Legendre polynomial Pn(x))
   Tvalues: [
     -0.06405689286260563,
@@ -81,14 +81,14 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
       return e && (u.z = r * o[0].z + c * o[1].z), u;
     }
     if (i < 4) {
-      let u = r * r, f = c * c, a, x, l, y = 0;
-      i === 2 ? (o = [o[0], o[1], o[2], tt], a = u, x = r * c * 2, l = f) : i === 3 && (a = u * r, x = u * c * 3, l = r * f * 3, y = c * f);
+      let u = r * r, f = c * c, a, x, h, y = 0;
+      i === 2 ? (o = [o[0], o[1], o[2], tt], a = u, x = r * c * 2, h = f) : i === 3 && (a = u * r, x = u * c * 3, h = r * f * 3, y = c * f);
       const p = {
-        x: a * o[0].x + x * o[1].x + l * o[2].x + y * o[3].x,
-        y: a * o[0].y + x * o[1].y + l * o[2].y + y * o[3].y,
+        x: a * o[0].x + x * o[1].x + h * o[2].x + y * o[3].x,
+        y: a * o[0].y + x * o[1].y + h * o[2].y + y * o[3].y,
         t: c
       };
-      return e && (p.z = a * o[0].z + x * o[1].z + l * o[2].z + y * o[3].z), p;
+      return e && (p.z = a * o[0].z + x * o[1].z + h * o[2].z + y * o[3].z), p;
     }
     const s = JSON.parse(JSON.stringify(n));
     for (; s.length > 1; ) {
@@ -103,26 +103,26 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
   },
   computeWithRatios: function(c, n, e, i) {
     const r = 1 - c, o = e, s = n;
-    let u = o[0], f = o[1], a = o[2], x = o[3], l;
+    let u = o[0], f = o[1], a = o[2], x = o[3], h;
     if (u *= r, f *= c, s.length === 2)
-      return l = u + f, {
-        x: (u * s[0].x + f * s[1].x) / l,
-        y: (u * s[0].y + f * s[1].y) / l,
-        z: i ? (u * s[0].z + f * s[1].z) / l : !1,
+      return h = u + f, {
+        x: (u * s[0].x + f * s[1].x) / h,
+        y: (u * s[0].y + f * s[1].y) / h,
+        z: i ? (u * s[0].z + f * s[1].z) / h : !1,
         t: c
       };
     if (u *= r, f *= 2 * r, a *= c * c, s.length === 3)
-      return l = u + f + a, {
-        x: (u * s[0].x + f * s[1].x + a * s[2].x) / l,
-        y: (u * s[0].y + f * s[1].y + a * s[2].y) / l,
-        z: i ? (u * s[0].z + f * s[1].z + a * s[2].z) / l : !1,
+      return h = u + f + a, {
+        x: (u * s[0].x + f * s[1].x + a * s[2].x) / h,
+        y: (u * s[0].y + f * s[1].y + a * s[2].y) / h,
+        z: i ? (u * s[0].z + f * s[1].z + a * s[2].z) / h : !1,
         t: c
       };
     if (u *= r, f *= 1.5 * r, a *= 3 * r, x *= c * c * c, s.length === 4)
-      return l = u + f + a + x, {
-        x: (u * s[0].x + f * s[1].x + a * s[2].x + x * s[3].x) / l,
-        y: (u * s[0].y + f * s[1].y + a * s[2].y + x * s[3].y) / l,
-        z: i ? (u * s[0].z + f * s[1].z + a * s[2].z + x * s[3].z) / l : !1,
+      return h = u + f + a + x, {
+        x: (u * s[0].x + f * s[1].x + a * s[2].x + x * s[3].x) / h,
+        y: (u * s[0].y + f * s[1].y + a * s[2].y + x * s[3].y) / h,
+        z: i ? (u * s[0].z + f * s[1].z + a * s[2].z + x * s[3].z) / h : !1,
         t: c
       };
   },
@@ -140,16 +140,16 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
     return e;
   },
   between: function(c, n, e) {
-    return n <= c && c <= e || h.approximately(c, n) || h.approximately(c, e);
+    return n <= c && c <= e || l.approximately(c, n) || l.approximately(c, e);
   },
   approximately: function(c, n, e) {
     return b(c - n) <= (e || B);
   },
   length: function(c) {
-    const e = h.Tvalues.length;
+    const e = l.Tvalues.length;
     let i = 0;
     for (let r = 0, o; r < e; r++)
-      o = 0.5 * h.Tvalues[r] + 0.5, i += h.Cvalues[r] * h.arcfn(o, c);
+      o = 0.5 * l.Tvalues[r] + 0.5, i += l.Cvalues[r] * l.arcfn(o, c);
     return 0.5 * i;
   },
   map: function(c, n, e, i, r) {
@@ -168,7 +168,7 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
     return typeof c.z < "u" && (n += "/" + c.z), n;
   },
   pointsToString: function(c) {
-    return "[" + c.map(h.pointToString).join(", ") + "]";
+    return "[" + c.map(l.pointToString).join(", ") + "]";
   },
   copy: function(c) {
     return JSON.parse(JSON.stringify(c));
@@ -189,7 +189,7 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
   closest: function(c, n) {
     let e = M(2, 63), i, r;
     return c.forEach(function(o, s) {
-      r = h.dist(n, o), r < e && (e = r, i = s);
+      r = l.dist(n, o), r < e && (e = r, i = s);
     }), { mdist: e, mpos: i };
   },
   abcratio: function(c, n) {
@@ -217,11 +217,11 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
     return x == 0 ? !1 : { x: f / x, y: a / x };
   },
   lli4: function(c, n, e, i) {
-    const r = c.x, o = c.y, s = n.x, u = n.y, f = e.x, a = e.y, x = i.x, l = i.y;
-    return h.lli8(r, o, s, u, f, a, x, l);
+    const r = c.x, o = c.y, s = n.x, u = n.y, f = e.x, a = e.y, x = i.x, h = i.y;
+    return l.lli8(r, o, s, u, f, a, x, h);
   },
   lli: function(c, n) {
-    return h.lli4(c, c.c, n, n.c);
+    return l.lli4(c, c.c, n, n.c);
   },
   makeline: function(c, n) {
     return new v(
@@ -244,7 +244,7 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
     };
   },
   shapeintersections: function(c, n, e, i, r) {
-    if (!h.bboxoverlap(n, i))
+    if (!l.bboxoverlap(n, i))
       return [];
     const o = [], s = [c.startcap, c.forward, c.back, c.endcap], u = [e.startcap, e.forward, e.back, e.endcap];
     return s.forEach(function(f) {
@@ -257,15 +257,15 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
     }), o;
   },
   makeshape: function(c, n, e) {
-    const i = n.points.length, r = c.points.length, o = h.makeline(n.points[i - 1], c.points[0]), s = h.makeline(c.points[r - 1], n.points[0]), u = {
+    const i = n.points.length, r = c.points.length, o = l.makeline(n.points[i - 1], c.points[0]), s = l.makeline(c.points[r - 1], n.points[0]), u = {
       startcap: o,
       forward: c,
       back: n,
       endcap: s,
-      bbox: h.findbbox([o, c, n, s])
+      bbox: l.findbbox([o, c, n, s])
     };
     return u.intersections = function(f) {
-      return h.shapeintersections(
+      return l.shapeintersections(
         u,
         u.bbox,
         f,
@@ -294,7 +294,7 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
   },
   roots: function(c, n) {
     n = n || { p1: { x: 0, y: 0 }, p2: { x: 1, y: 0 } };
-    const e = c.length - 1, i = h.align(c, n), r = function(d) {
+    const e = c.length - 1, i = l.align(c, n), r = function(d) {
       return 0 <= d && d <= 1;
     };
     if (e === 2) {
@@ -307,15 +307,15 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
       return [];
     }
     const o = i[0].y, s = i[1].y, u = i[2].y, f = i[3].y;
-    let a = -o + 3 * s - 3 * u + f, x = 3 * o - 6 * s + 3 * u, l = -3 * o + 3 * s, y = o;
-    if (h.approximately(a, 0)) {
-      if (h.approximately(x, 0))
-        return h.approximately(l, 0) ? [] : [-y / l].filter(r);
-      const d = N(l * l - 4 * x * y), z = 2 * x;
-      return [(d - l) / z, (-l - d) / z].filter(r);
+    let a = -o + 3 * s - 3 * u + f, x = 3 * o - 6 * s + 3 * u, h = -3 * o + 3 * s, y = o;
+    if (l.approximately(a, 0)) {
+      if (l.approximately(x, 0))
+        return l.approximately(h, 0) ? [] : [-y / h].filter(r);
+      const d = N(h * h - 4 * x * y), z = 2 * x;
+      return [(d - h) / z, (-h - d) / z].filter(r);
     }
-    x /= a, l /= a, y /= a;
-    const p = (3 * l - x * x) / 3, g = p / 3, _ = (2 * x * x * x - 9 * x * l + 27 * y) / 27, E = _ / 2, k = E * E + g * g * g;
+    x /= a, h /= a, y /= a;
+    const p = (3 * h - x * x) / 3, g = p / 3, _ = (2 * x * x * x - 9 * x * h + 27 * y) / 27, E = _ / 2, k = E * E + g * g * g;
     let O, w, T, m, C;
     if (k < 0) {
       const d = -p / 3, z = d * d * d, q = N(z), P = -_ / (2 * q), I = P < -1 ? -1 : P > 1 ? 1 : P, A = K(I), j = $(q), R = 2 * j;
@@ -347,13 +347,13 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
   },
   curvature: function(c, n, e, i, r) {
     let o, s, u, f, a = 0, x = 0;
-    const l = h.compute(c, n), y = h.compute(c, e), p = l.x * l.x + l.y * l.y;
+    const h = l.compute(c, n), y = l.compute(c, e), p = h.x * h.x + h.y * h.y;
     if (i ? (o = N(
-      M(l.y * y.z - y.y * l.z, 2) + M(l.z * y.x - y.z * l.x, 2) + M(l.x * y.y - y.x * l.y, 2)
-    ), s = M(p + l.z * l.z, 3 / 2)) : (o = l.x * y.y - l.y * y.x, s = M(p, 3 / 2)), o === 0 || s === 0)
+      M(h.y * y.z - y.y * h.z, 2) + M(h.z * y.x - y.z * h.x, 2) + M(h.x * y.y - y.x * h.y, 2)
+    ), s = M(p + h.z * h.z, 3 / 2)) : (o = h.x * y.y - h.y * y.x, s = M(p, 3 / 2)), o === 0 || s === 0)
       return { k: 0, r: 0 };
     if (a = o / s, x = s / o, !r) {
-      const g = h.curvature(c - 1e-3, n, e, i, !0).k, _ = h.curvature(c + 1e-3, n, e, i, !0).k;
+      const g = l.curvature(c - 1e-3, n, e, i, !0).k, _ = l.curvature(c + 1e-3, n, e, i, !0).k;
       f = (_ - a + (a - g)) / 2, u = (b(_ - a) + b(a - g)) / 2;
     }
     return { k: a, r: x, dk: f, adk: u };
@@ -361,17 +361,17 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
   inflections: function(c) {
     if (c.length < 4)
       return [];
-    const n = h.align(c, { p1: c[0], p2: c.slice(-1)[0] }), e = n[2].x * n[1].y, i = n[3].x * n[1].y, r = n[1].x * n[2].y, o = n[3].x * n[2].y, s = 18 * (-3 * e + 2 * i + 3 * r - o), u = 18 * (3 * e - i - 3 * r), f = 18 * (r - e);
-    if (h.approximately(s, 0)) {
-      if (!h.approximately(u, 0)) {
+    const n = l.align(c, { p1: c[0], p2: c.slice(-1)[0] }), e = n[2].x * n[1].y, i = n[3].x * n[1].y, r = n[1].x * n[2].y, o = n[3].x * n[2].y, s = 18 * (-3 * e + 2 * i + 3 * r - o), u = 18 * (3 * e - i - 3 * r), f = 18 * (r - e);
+    if (l.approximately(s, 0)) {
+      if (!l.approximately(u, 0)) {
         let y = -f / u;
         if (0 <= y && y <= 1)
           return [y];
       }
       return [];
     }
-    const a = u * u - 4 * s * f, x = Math.sqrt(a), l = 2 * s;
-    return h.approximately(l, 0) ? [] : [(x - u) / l, -(u + x) / l].filter(function(y) {
+    const a = u * u - 4 * s * f, x = Math.sqrt(a), h = 2 * s;
+    return l.approximately(h, 0) ? [] : [(x - u) / h, -(u + x) / h].filter(function(y) {
       return 0 <= y && y <= 1;
     });
   },
@@ -397,20 +397,20 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
       { left: u.right, right: f.right },
       { left: u.right, right: f.left }
     ];
-    a = a.filter(function(l) {
-      return h.bboxoverlap(l.left.bbox(), l.right.bbox());
+    a = a.filter(function(h) {
+      return l.bboxoverlap(h.left.bbox(), h.right.bbox());
     });
     let x = [];
-    return a.length === 0 || (a.forEach(function(l) {
+    return a.length === 0 || (a.forEach(function(h) {
       x = x.concat(
-        h.pairiteration(l.left, l.right, s)
+        l.pairiteration(h.left, h.right, s)
       );
-    }), x = x.filter(function(l, y) {
-      return x.indexOf(l) === y;
+    }), x = x.filter(function(h, y) {
+      return x.indexOf(h) === y;
     })), x;
   },
   getccenter: function(c, n, e) {
-    const i = n.x - c.x, r = n.y - c.y, o = e.x - n.x, s = e.y - n.y, u = i * S(F) - r * U(F), f = i * U(F) + r * S(F), a = o * S(F) - s * U(F), x = o * U(F) + s * S(F), l = (c.x + n.x) / 2, y = (c.y + n.y) / 2, p = (n.x + e.x) / 2, g = (n.y + e.y) / 2, _ = l + u, E = y + f, k = p + a, O = g + x, w = h.lli8(l, y, _, E, p, g, k, O), T = h.dist(w, c);
+    const i = n.x - c.x, r = n.y - c.y, o = e.x - n.x, s = e.y - n.y, u = i * S(F) - r * U(F), f = i * U(F) + r * S(F), a = o * S(F) - s * U(F), x = o * U(F) + s * S(F), h = (c.x + n.x) / 2, y = (c.y + n.y) / 2, p = (n.x + e.x) / 2, g = (n.y + e.y) / 2, _ = h + u, E = y + f, k = p + a, O = g + x, w = l.lli8(h, y, _, E, p, g, k, O), T = l.dist(w, c);
     let m = J(c.y - w.y, c.x - w.x), C = J(n.y - w.y, n.x - w.x), d = J(e.y - w.y, e.x - w.x), z;
     return m < d ? ((m > C || C > d) && (m += X), m > d && (z = d, d = m, m = z)) : d < C && C < m ? (z = d, d = m, m = z) : d += X, w.s = m, w.e = d, w.r = T, w;
   },
@@ -427,7 +427,7 @@ const Z = Math.PI, X = 2 * Z, F = Z / 2, B = 1e-6, W = Number.MAX_SAFE_INTEGER |
 };
 class G {
   constructor(n) {
-    this.curves = [], this._3d = !1, n && (this.curves = n, this._3d = this.curves[0]._3d), this._closed = h.checkcoincidation(this.lastPathPoint(), this.firstPathPoint()), this.setJoinC_0();
+    this.curves = [], this._3d = !1, n && (this.curves = n, this._3d = this.curves[0]._3d), this._closed = l.checkcoincidation(this.lastPathPoint(), this.firstPathPoint()), this.setJoinC_0();
   }
   curve(n) {
     return this.curves[n];
@@ -447,16 +447,16 @@ class G {
   setJoinC_0() {
     for (let n = 0; n < this.curves.length - 1; n++) {
       const e = this.curve(n), i = this.curve(n + 1), r = e.lastPoint(), o = i.points[0];
-      if (!h.checkcoincidation(r, o)) {
-        const s = h.midpoint(r, o);
+      if (!l.checkcoincidation(r, o)) {
+        const s = l.midpoint(r, o);
         e.points[e.lastPointIdx()] = s, i.points[0] = s;
       }
     }
   }
   closePath() {
     const n = this.lastPathPoint(), e = this.firstPathPoint();
-    if (!h.checkcoincidation(n, e) && !this._closed) {
-      const i = this.firstPathCurve(), r = this.lastPathCurve(), o = h.midpoint(n, e);
+    if (!l.checkcoincidation(n, e) && !this._closed) {
+      const i = this.firstPathCurve(), r = this.lastPathCurve(), o = l.midpoint(n, e);
       i.points[0] = o, r.points[r.lastPointIdx()] = o, this._closed = !0;
     } else
       return;
@@ -466,7 +466,7 @@ class G {
   }
   toString() {
     return "[" + this.curves.map(function(n) {
-      return h.pointsToString(n.points);
+      return l.pointsToString(n.points);
     }).join(", ") + "]";
   }
   addCurve(n) {
@@ -482,7 +482,7 @@ class G {
   bbox() {
     const n = this.curves;
     for (var e = n[0].bbox(), i = 1; i < n.length; i++)
-      h.expandbox(e, n[i].bbox());
+      l.expandbox(e, n[i].bbox());
     return e;
   }
   offset(n) {
@@ -529,8 +529,8 @@ class v {
     }
     const a = this.order = u.length - 1, x = this.dims = ["x", "y"];
     s && x.push("z"), this.dimlen = x.length;
-    const l = h.align(u, { p1: u[0], p2: u[a] }), y = h.dist(u[0], u[a]);
-    this._linear = l.reduce((p, g) => p + L(g.y), 0) < y / 50, this._lut = [], this._t1 = 0, this._t2 = 1, this.update();
+    const h = l.align(u, { p1: u[0], p2: u[a] }), y = l.dist(u[0], u[a]);
+    this._linear = h.reduce((p, g) => p + L(g.y), 0) < y / 50, this.curvepoints = [], this._lut = [], this._t1 = 0, this._t2 = 1, this.update();
   }
   static quadraticFromPoints(n, e, i, r) {
     if (typeof r > "u" && (r = 0.5), r === 0)
@@ -543,15 +543,15 @@ class v {
   static cubicFromPoints(n, e, i, r, o) {
     typeof r > "u" && (r = 0.5);
     const s = v.getABC(3, n, e, i, r);
-    typeof o > "u" && (o = h.dist(e, s.C));
-    const u = o * (1 - r) / r, f = h.dist(n, i), a = (i.x - n.x) / f, x = (i.y - n.y) / f, l = o * a, y = o * x, p = u * a, g = u * x, _ = { x: e.x - l, y: e.y - y }, E = { x: e.x + p, y: e.y + g }, k = s.A, O = { x: k.x + (_.x - k.x) / (1 - r), y: k.y + (_.y - k.y) / (1 - r) }, w = { x: k.x + (E.x - k.x) / r, y: k.y + (E.y - k.y) / r }, T = { x: n.x + (O.x - n.x) / r, y: n.y + (O.y - n.y) / r }, m = {
+    typeof o > "u" && (o = l.dist(e, s.C));
+    const u = o * (1 - r) / r, f = l.dist(n, i), a = (i.x - n.x) / f, x = (i.y - n.y) / f, h = o * a, y = o * x, p = u * a, g = u * x, _ = { x: e.x - h, y: e.y - y }, E = { x: e.x + p, y: e.y + g }, k = s.A, O = { x: k.x + (_.x - k.x) / (1 - r), y: k.y + (_.y - k.y) / (1 - r) }, w = { x: k.x + (E.x - k.x) / r, y: k.y + (E.y - k.y) / r }, T = { x: n.x + (O.x - n.x) / r, y: n.y + (O.y - n.y) / r }, m = {
       x: i.x + (w.x - i.x) / (1 - r),
       y: i.y + (w.y - i.y) / (1 - r)
     };
     return new v(n, T, m, i);
   }
   static getUtils() {
-    return h;
+    return l;
   }
   getUtils() {
     return v.getUtils();
@@ -569,7 +569,7 @@ class v {
     return this.toString();
   }
   toString() {
-    return h.pointsToString(this.points);
+    return l.pointsToString(this.points);
   }
   toSVG() {
     if (this._3d)
@@ -594,20 +594,28 @@ class v {
     }).join("");
   }
   update() {
-    this._lut = [], this.dpoints = h.derive(this.points, this._3d), this.computedirection();
+    this._lut = [], this.dpoints = l.derive(this.points, this._3d), this.computedirection();
+    const n = this.curvepoints.length;
+    this.computeCurvePoints(n);
+  }
+  computeCurvePoints(n = 1e3) {
+    this.curvepoints = [];
+    for (let e = 0, i, r; e < n; e++)
+      r = e / (n - 1), i = this.compute(r), i.t = r, this.curvepoints.push(i);
+    return this.curvepoints;
   }
   computedirection() {
-    const n = this.points, e = h.angle(n[0], n[this.order], n[1]);
+    const n = this.points, e = l.angle(n[0], n[this.order], n[1]);
     this.clockwise = e > 0;
   }
   length() {
-    return h.length(this.derivative.bind(this));
+    return l.length(this.derivative.bind(this));
   }
   static getABC(n = 2, e, i, r, o = 0.5) {
-    const s = h.projectionratio(o, n), u = 1 - s, f = {
+    const s = l.projectionratio(o, n), u = 1 - s, f = {
       x: s * e.x + u * r.x,
       y: s * e.y + u * r.y
-    }, a = h.abcratio(o, n);
+    }, a = l.abcratio(o, n);
     return { A: {
       x: i.x + (i.x - f.x) / a,
       y: i.y + (i.y - f.y) / a
@@ -630,16 +638,16 @@ class v {
     e = e || 5;
     const i = this.getLUT(), r = [];
     for (let o = 0, s, u = 0; o < i.length; o++)
-      s = i[o], h.dist(s, n) < e && (r.push(s), u += o / i.length);
+      s = i[o], l.dist(s, n) < e && (r.push(s), u += o / i.length);
     return r.length ? t /= r.length : !1;
   }
   project(n) {
-    const e = this.getLUT(), i = e.length - 1, r = h.closest(e, n), o = r.mpos, s = (o - 1) / i, u = (o + 1) / i, f = 0.1 / i;
-    let a = r.mdist, x = s, l = x, y;
+    const e = this.getLUT(), i = e.length - 1, r = l.closest(e, n), o = r.mpos, s = (o - 1) / i, u = (o + 1) / i, f = 0.1 / i;
+    let a = r.mdist, x = s, h = x, y;
     a += 1;
     for (let p; x < u + f; x += f)
-      y = this.compute(x), p = h.dist(n, y), p < a && (a = p, l = x);
-    return l = l < 0 ? 0 : l > 1 ? 1 : l, y = this.compute(l), y.t = l, y.d = a, y;
+      y = this.compute(x), p = l.dist(n, y), p < a && (a = p, h = x);
+    return h = h < 0 ? 0 : h > 1 ? 1 : h, y = this.compute(h), y.t = h, y.d = a, y;
   }
   get(n) {
     return this.compute(n);
@@ -648,7 +656,7 @@ class v {
     return this.points[n];
   }
   compute(n) {
-    return this.ratios ? h.computeWithRatios(n, this.points, this.ratios, this._3d) : h.compute(n, this.points, this._3d, this.ratios);
+    return this.ratios ? l.computeWithRatios(n, this.points, this.ratios, this._3d) : l.compute(n, this.points, this._3d, this.ratios);
   }
   raise() {
     const n = this.points, e = [n[0]], i = n.length;
@@ -660,20 +668,20 @@ class v {
     return e[i] = n[i - 1], new v(e);
   }
   derivative(n) {
-    return h.compute(n, this.dpoints[0], this._3d);
+    return l.compute(n, this.dpoints[0], this._3d);
   }
   dderivative(n) {
-    return h.compute(n, this.dpoints[1], this._3d);
+    return l.compute(n, this.dpoints[1], this._3d);
   }
   align() {
     let n = this.points;
-    return new v(h.align(n, { p1: n[0], p2: n[n.length - 1] }));
+    return new v(l.align(n, { p1: n[0], p2: n[n.length - 1] }));
   }
   curvature(n) {
-    return h.curvature(n, this.dpoints[0], this.dpoints[1], this._3d);
+    return l.curvature(n, this.dpoints[0], this.dpoints[1], this._3d);
   }
   inflections() {
-    return h.inflections(this.points);
+    return l.inflections(this.points);
   }
   normal(n) {
     return this._3d ? this.__normal3(n) : this.__normal2(n);
@@ -713,7 +721,7 @@ class v {
     for (r[o++] = e[0], r[o++] = e[1], r[o++] = e[2], this.order === 3 && (r[o++] = e[3]); e.length > 1; ) {
       i = [];
       for (let s = 0, u, f = e.length - 1; s < f; s++)
-        u = h.lerp(n, e[s], e[s + 1]), r[o++] = u, i.push(u);
+        u = l.lerp(n, e[s], e[s + 1]), r[o++] = u, i.push(u);
       e = i;
     }
     return r;
@@ -728,7 +736,7 @@ class v {
       right: this.order === 2 ? new v([i[5], i[4], i[2]]) : new v([i[9], i[8], i[6], i[3]]),
       span: i
     };
-    return r.left._t1 = h.map(0, 0, 1, this._t1, this._t2), r.left._t2 = h.map(n, 0, 1, this._t1, this._t2), r.right._t1 = h.map(n, 0, 1, this._t1, this._t2), r.right._t2 = h.map(1, 0, 1, this._t1, this._t2), e ? (e = h.map(e, n, 1, 0, 1), r.right.split(e).left) : r;
+    return r.left._t1 = l.map(0, 0, 1, this._t1, this._t2), r.left._t2 = l.map(n, 0, 1, this._t1, this._t2), r.right._t1 = l.map(n, 0, 1, this._t1, this._t2), r.right._t2 = l.map(1, 0, 1, this._t1, this._t2), e ? (e = l.map(e, n, 1, 0, 1), r.right.split(e).left) : r;
   }
   extrema() {
     const n = {};
@@ -738,11 +746,11 @@ class v {
         let r = function(s) {
           return s[i];
         }, o = this.dpoints[0].map(r);
-        n[i] = h.droots(o), this.order === 3 && (o = this.dpoints[1].map(r), n[i] = n[i].concat(h.droots(o))), n[i] = n[i].filter(function(s) {
+        n[i] = l.droots(o), this.order === 3 && (o = this.dpoints[1].map(r), n[i] = n[i].concat(l.droots(o))), n[i] = n[i].filter(function(s) {
           return s >= 0 && s <= 1;
-        }), e = e.concat(n[i].sort(h.numberSort));
+        }), e = e.concat(n[i].sort(l.numberSort));
       }.bind(this)
-    ), n.values = e.sort(h.numberSort).filter(function(i, r) {
+    ), n.values = e.sort(l.numberSort).filter(function(i, r) {
       return e.indexOf(i) === r;
     }), n;
   }
@@ -750,13 +758,13 @@ class v {
     const n = this.extrema(), e = {};
     return this.dims.forEach(
       function(i) {
-        e[i] = h.getminmax(this, i, n[i]);
+        e[i] = l.getminmax(this, i, n[i]);
       }.bind(this)
     ), e;
   }
   overlaps(n) {
     const e = this.bbox(), i = n.bbox();
-    return h.bboxoverlap(e, i);
+    return l.bboxoverlap(e, i);
   }
   offset(n, e) {
     if (typeof e < "u") {
@@ -784,7 +792,7 @@ class v {
   }
   simple() {
     if (this.order === 3) {
-      const r = h.angle(this.points[0], this.points[3], this.points[1]), o = h.angle(this.points[0], this.points[3], this.points[2]);
+      const r = l.angle(this.points[0], this.points[3], this.points[1]), o = l.angle(this.points[0], this.points[3], this.points[2]);
       if (r > 0 && o < 0 || r < 0 && o > 0)
         return !1;
     }
@@ -802,10 +810,10 @@ class v {
           if (o = a.split(e, i), !o.simple()) {
             if (i -= r, L(e - i) < r)
               return [];
-            o = a.split(e, i), o._t1 = h.map(e, 0, 1, a._t1, a._t2), o._t2 = h.map(i, 0, 1, a._t1, a._t2), u.push(o), e = i;
+            o = a.split(e, i), o._t1 = l.map(e, 0, 1, a._t1, a._t2), o._t2 = l.map(i, 0, 1, a._t1, a._t2), u.push(o), e = i;
             break;
           }
-      e < 1 && (o = a.split(e, 1), o._t1 = h.map(e, 0, 1, a._t1, a._t2), o._t2 = a._t2, u.push(o));
+      e < 1 && (o = a.split(e, 1), o._t1 = l.map(e, 0, 1, a._t1, a._t2), o._t2 = a._t2, u.push(o));
     }), u;
   }
   translate(n, e, i) {
@@ -831,30 +839,30 @@ class v {
         i ? i(0) : n,
         i ? i(1) : n
       );
-    const s = i ? i(0) : n, u = i ? i(1) : n, f = [this.offset(0, 10), this.offset(1, 10)], a = [], x = h.lli4(f[0], f[0].c, f[1], f[1].c);
+    const s = i ? i(0) : n, u = i ? i(1) : n, f = [this.offset(0, 10), this.offset(1, 10)], a = [], x = l.lli4(f[0], f[0].c, f[1], f[1].c);
     if (!x)
       throw new Error("cannot scale this curve. Try reducing it first.");
-    return [0, 1].forEach(function(l) {
-      const y = a[l * e] = h.copy(o[l * e]);
-      y.x += (l ? u : s) * f[l].n.x, y.y += (l ? u : s) * f[l].n.y;
-    }), i ? ([0, 1].forEach(function(l) {
-      if (!(e === 2 && l)) {
-        var y = o[l + 1], p = {
+    return [0, 1].forEach(function(h) {
+      const y = a[h * e] = l.copy(o[h * e]);
+      y.x += (h ? u : s) * f[h].n.x, y.y += (h ? u : s) * f[h].n.y;
+    }), i ? ([0, 1].forEach(function(h) {
+      if (!(e === 2 && h)) {
+        var y = o[h + 1], p = {
           x: y.x - x.x,
           y: y.y - x.y
-        }, g = i ? i((l + 1) / e) : n;
+        }, g = i ? i((h + 1) / e) : n;
         i && !r && (g = -g);
         var _ = D(p.x * p.x + p.y * p.y);
-        p.x /= _, p.y /= _, a[l + 1] = {
+        p.x /= _, p.y /= _, a[h + 1] = {
           x: y.x + g * p.x,
           y: y.y + g * p.y
         };
       }
-    }), new v(a)) : ([0, 1].forEach((l) => {
-      if (e === 2 && l)
+    }), new v(a)) : ([0, 1].forEach((h) => {
+      if (e === 2 && h)
         return;
-      const y = a[l * e], p = this.derivative(l), g = { x: y.x + p.x, y: y.y + p.y };
-      a[l + 1] = h.lli4(y, g, x, o[l + 1]);
+      const y = a[h * e], p = this.derivative(h), g = { x: y.x + p.x, y: y.y + p.y };
+      a[h + 1] = l.lli4(y, g, x, o[h + 1]);
     }), new v(a));
   }
   outline(n, e, i, r) {
@@ -864,36 +872,36 @@ class v {
       i === void 0 && (i = n, r = e), z = { x: C.x + m.x * n, y: C.y + m.y * n }, P = { x: d.x + m.x * i, y: d.y + m.y * i }, q = { x: (z.x + P.x) / 2, y: (z.y + P.y) / 2 };
       const I = [z, q, P];
       z = { x: C.x - m.x * e, y: C.y - m.y * e }, P = { x: d.x - m.x * r, y: d.y - m.y * r }, q = { x: (z.x + P.x) / 2, y: (z.y + P.y) / 2 };
-      const A = [P, q, z], j = h.makeline(A[2], I[0]), R = h.makeline(I[2], A[0]), H = [j, new v(I), R, new v(A)];
+      const A = [P, q, z], j = l.makeline(A[2], I[0]), R = l.makeline(I[2], A[0]), H = [j, new v(I), R, new v(A)];
       return new G(H);
     }
     const o = this.reduce(), s = o.length, u = [];
-    let f = [], a, x = 0, l = this.length();
+    let f = [], a, x = 0, h = this.length();
     const y = typeof i < "u" && typeof r < "u";
     function p(m, C, d, z, q) {
       return function(P) {
         const I = z / d, A = (z + q) / d, j = C - m;
-        return h.map(P, 0, 1, m + I * j, m + A * j);
+        return l.map(P, 0, 1, m + I * j, m + A * j);
       };
     }
     o.forEach(function(m) {
       const C = m.length();
       y ? (u.push(
-        m.scale(p(n, i, l, x, C))
+        m.scale(p(n, i, h, x, C))
       ), f.push(
-        m.scale(p(-e, -r, l, x, C))
+        m.scale(p(-e, -r, h, x, C))
       )) : (u.push(m.scale(n)), f.push(m.scale(-e))), x += C;
     }), f = f.map(function(m) {
       return a = m.points, a[3] ? m.points = [a[3], a[2], a[1], a[0]] : m.points = [a[2], a[1], a[0]], m;
     }).reverse();
-    const g = u[0].points[0], _ = u[s - 1].points[u[s - 1].points.length - 1], E = f[s - 1].points[f[s - 1].points.length - 1], k = f[0].points[0], O = h.makeline(E, g), w = h.makeline(_, k), T = [O].concat(u).concat([w]).concat(f);
+    const g = u[0].points[0], _ = u[s - 1].points[u[s - 1].points.length - 1], E = f[s - 1].points[f[s - 1].points.length - 1], k = f[0].points[0], O = l.makeline(E, g), w = l.makeline(_, k), T = [O].concat(u).concat([w]).concat(f);
     return new G(T);
   }
   outlineshapes(n, e, i) {
     e = e || n;
     const r = this.outline(n, e).curves, o = [];
     for (let s = 1, u = r.length; s < u / 2; s++) {
-      const f = h.makeshape(
+      const f = l.makeshape(
         r[s],
         r[u - s],
         i
@@ -911,9 +919,9 @@ class v {
   }
   lineIntersects(n) {
     const e = Q(n.p1.x, n.p2.x), i = Q(n.p1.y, n.p2.y), r = V(n.p1.x, n.p2.x), o = V(n.p1.y, n.p2.y);
-    return h.roots(this.points, n).filter((s) => {
+    return l.roots(this.points, n).filter((s) => {
       var u = this.get(s);
-      return h.between(u.x, e, r) && h.between(u.y, i, o);
+      return l.between(u.x, e, r) && l.between(u.y, i, o);
     });
   }
   selfintersects(n) {
@@ -931,7 +939,7 @@ class v {
     });
     let o = [];
     return r.forEach(function(s) {
-      const u = h.pairiteration(
+      const u = l.pairiteration(
         s.left,
         s.right,
         i
@@ -943,26 +951,26 @@ class v {
     return n = n || 0.5, this._iterate(n, []);
   }
   _error(n, e, i, r) {
-    const o = (r - i) / 4, s = this.get(i + o), u = this.get(r - o), f = h.dist(n, e), a = h.dist(n, s), x = h.dist(n, u);
+    const o = (r - i) / 4, s = this.get(i + o), u = this.get(r - o), f = l.dist(n, e), a = l.dist(n, s), x = l.dist(n, u);
     return L(a - f) + L(x - f);
   }
   _iterate(n, e) {
     let i = 0, r = 1, o;
     do {
       o = 0, r = 1;
-      let s = this.get(i), u, f, a, x, l = !1, y = !1, p, g = r, _ = 1;
+      let s = this.get(i), u, f, a, x, h = !1, y = !1, p, g = r, _ = 1;
       do
-        if (y = l, x = a, g = (i + r) / 2, u = this.get(g), f = this.get(r), a = h.getccenter(s, u, f), a.interval = {
+        if (y = h, x = a, g = (i + r) / 2, u = this.get(g), f = this.get(r), a = l.getccenter(s, u, f), a.interval = {
           start: i,
           end: r
-        }, l = this._error(a, s, i, r) <= n, p = y && !l, p || (_ = r), l) {
+        }, h = this._error(a, s, i, r) <= n, p = y && !h, p || (_ = r), h) {
           if (r >= 1) {
             if (a.interval.end = _ = 1, x = a, r > 1) {
               let k = {
                 x: a.x + a.r * nt(a.e),
                 y: a.y + a.r * et(a.e)
               };
-              a.e += h.angle({ x: a.x, y: a.y }, k, this.get(1));
+              a.e += l.angle({ x: a.x, y: a.y }, k, this.get(1));
             }
             break;
           }

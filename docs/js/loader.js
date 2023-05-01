@@ -2,10 +2,32 @@ const filesNames = [
   "linear",
   "quadratic",
   "cubic",
+
+  "linearBoundingBox",
+  "quadraticBoundingBox",
+  "cubicBoudingBox",
+
+  "quadraticLineIntersection",
+  "cubicLineIntersection",
+
+  "quadraticQuadraticIntersection",
+  "cubicQuadraticIntersection",
+
+  "quadraticCubicIntersection",
+  "cubicCubicIntersection",
+
+  "cubicSelfIntersection",
+
+  "linearProjection",
+  "quadraticProjection",
+  "cubicProjection",
+
+  "linearTangent",
   "quadraticTangent",
   "cubicTangent",
-  "openSubpath",
-  "closedSubpath"
+
+  "openPolyBezier",
+  "closedPolyBezier"
 ];
 
 async function loadScripts() {
