@@ -30,6 +30,9 @@ const filesNames = [
   "quadraticTangent",
   "cubicTangent",
 
+  "quadraticCurvature",
+  "cubicCurvature",
+
   "quadraticArcs",
   "cubicArcs",
 
