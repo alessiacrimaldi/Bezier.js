@@ -1,25 +1,25 @@
-function E(n, f, m) {
+function E(n, o, c) {
   const y = n.getContext("2d");
-  let i = !1, r = 0, u = 0, h = 0, l = 0, a, o, s;
-  const x = (e) => Math.abs(r - e.x) < 10 && Math.abs(u - e.y) < 10;
+  let f = !1, a = 0, u = 0, h = 0, x = 0, i, s, d;
+  const l = (e) => Math.abs(a - e.x) < 10 && Math.abs(u - e.y) < 10;
   n.addEventListener("mousedown", (e) => {
-    r = e.offsetX, u = e.offsetY, f.length > 1 ? f.forEach((t) => {
-      a = t.points, a.forEach((d) => {
-        if (x(d)) {
-          i = !0, o = d, s = t, h = d.x, l = d.y;
+    a = e.offsetX, u = e.offsetY, o.length > 1 ? o.forEach((t) => {
+      i = t.points, i.forEach((r) => {
+        if (l(r)) {
+          f = !0, s = r, d = t, h = r.x, x = r.y;
           return;
         }
       });
-    }) : (a = f.points, a.forEach((t) => {
-      if (x(t)) {
-        i = !0, o = t, h = t.x, l = t.y;
+    }) : (i = o.points, i.forEach((t) => {
+      if (l(t)) {
+        f = !0, s = t, h = t.x, x = t.y;
         return;
       }
     }));
   }), n.addEventListener("mousemove", (e) => {
-    i && (o.x = h + (e.offsetX - r), o.y = l + (e.offsetY - u), s ? s.update() : f.update(), y.clearRect(0, 0, n.width, n.height), m());
+    f && (s.x = h + (e.offsetX - a), s.y = x + (e.offsetY - u), d ? d.update() : o.update(), y.clearRect(0, 0, n.width, n.height), c());
   }), n.addEventListener("mouseup", (e) => {
-    i = !1, o = void 0, s = void 0;
+    f = !1, s = void 0, d = void 0;
   });
 }
 export {
