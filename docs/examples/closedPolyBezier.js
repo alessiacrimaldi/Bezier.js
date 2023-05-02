@@ -27,10 +27,8 @@ const setup = () => {
     ];
     path = new Bezier.PolyBezier(curves);
     // makes the curves interactive
-    path.curves.forEach(curve => {
-        handleInteraction(demo.canvas, curve, () => {
-            draw();
-        })
+    handleInteraction(demo.canvas, path.curves, () => {
+        draw();
     })
 }
 setup();
