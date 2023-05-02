@@ -454,12 +454,10 @@ class G {
     }
   }
   closePath() {
-    const n = this.lastPathPoint(), e = this.firstPathPoint();
-    if (!l.checkcoincidation(n, e) && !this._closed) {
-      const i = this.firstPathCurve(), r = this.lastPathCurve(), o = l.midpoint(n, e);
-      i.points[0] = o, r.points[r.lastPointIdx()] = o, this._closed = !0;
-    } else
-      return;
+    if (!this._closed) {
+      const n = this.lastPathCurve();
+      n.points[n.lastPointIdx()] = this.firstPathPoint(), this._closed = !0;
+    }
   }
   valueOf() {
     return this.toString();
