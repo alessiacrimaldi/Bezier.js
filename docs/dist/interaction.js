@@ -1,28 +1,53 @@
-function E(n, o, c) {
-  const y = n.getContext("2d");
-  let f = !1, a = 0, u = 0, h = 0, x = 0, i, s, d;
-  const l = (e) => Math.abs(a - e.x) < 10 && Math.abs(u - e.y) < 10;
-  n.addEventListener("mousedown", (e) => {
-    a = e.offsetX, u = e.offsetY, o.length > 1 ? o.forEach((t) => {
-      i = t.points, i.forEach((r) => {
-        if (l(r)) {
-          f = !0, s = r, d = t, h = r.x, x = r.y;
+function handleInteraction(cvs, movable, update) {
+  const ctx = cvs.getContext("2d");
+  let isMoving = false, mx = 0, my = 0, sx = 0, sy = 0, points, selectedPoint, selectedCurve;
+  const isMouseNearPoint = (p) => Math.abs(mx - p.x) < 10 && Math.abs(my - p.y) < 10;
+  cvs.addEventListener("mousedown", (e) => {
+    mx = e.offsetX;
+    my = e.offsetY;
+    if (movable.length > 1) {
+      movable.forEach((c) => {
+        points = c.points;
+        points.forEach((p) => {
+          if (isMouseNearPoint(p)) {
+            isMoving = true;
+            selectedPoint = p;
+            selectedCurve = c;
+            sx = p.x;
+            sy = p.y;
+            return;
+          }
+        });
+      });
+    } else {
+      points = movable.points;
+      points.forEach((p) => {
+        if (isMouseNearPoint(p)) {
+          isMoving = true;
+          selectedPoint = p;
+          sx = p.x;
+          sy = p.y;
           return;
         }
       });
-    }) : (i = o.points, i.forEach((t) => {
-      if (l(t)) {
-        f = !0, s = t, h = t.x, x = t.y;
-        return;
-      }
-    }));
-  }), n.addEventListener("mousemove", (e) => {
-    f && (s.x = h + (e.offsetX - a), s.y = x + (e.offsetY - u), d ? d.update() : o.update(), y.clearRect(0, 0, n.width, n.height), c());
-  }), n.addEventListener("mouseup", (e) => {
-    f = !1, s = void 0, d = void 0;
+    }
+  });
+  cvs.addEventListener("mousemove", (e) => {
+    if (!isMoving)
+      return;
+    selectedPoint.x = sx + (e.offsetX - mx);
+    selectedPoint.y = sy + (e.offsetY - my);
+    selectedCurve ? selectedCurve.update() : movable.update();
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    update();
+  });
+  cvs.addEventListener("mouseup", (e) => {
+    isMoving = false;
+    selectedPoint = void 0;
+    selectedCurve = void 0;
   });
 }
 export {
-  E as default
+  handleInteraction as default
 };
 //# sourceMappingURL=interaction.js.map

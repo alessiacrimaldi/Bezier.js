@@ -1,16 +1,20 @@
-var y = (o, t, s) => {
-  if (!t.has(o))
-    throw TypeError("Cannot " + s);
+var __accessCheck = (obj, member, msg) => {
+  if (!member.has(obj))
+    throw TypeError("Cannot " + msg);
 };
-var h = (o, t, s) => (y(o, t, "read from private field"), s ? s.call(o) : t.get(o)), c = (o, t, s) => {
-  if (t.has(o))
+var __privateGet = (obj, member, getter) => {
+  __accessCheck(obj, member, "read from private field");
+  return getter ? getter.call(obj) : member.get(obj);
+};
+var __privateAdd = (obj, member, value) => {
+  if (member.has(obj))
     throw TypeError("Cannot add the same private member more than once");
-  t instanceof WeakSet ? t.add(o) : t.set(o, s);
+  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
 };
-var x, d;
-class g {
-  constructor(t) {
-    c(this, x, [
+var _rainbowColors, _shadeColors;
+class Drawing {
+  constructor(ctx) {
+    __privateAdd(this, _rainbowColors, [
       "#FF0000",
       "#FF7F00",
       "#FFFF00",
@@ -19,7 +23,7 @@ class g {
       "#4B0082",
       "#8F00FF"
     ]);
-    c(this, d, [
+    __privateAdd(this, _shadeColors, [
       "rgba(255, 0, 0, 0.5)",
       // rosso
       "rgba(255, 128, 0, 0.5)",
@@ -51,175 +55,285 @@ class g {
       "rgba(128, 128, 128, 0.5)"
       // grigio
     ]);
-    this.ctx = t;
+    this.ctx = ctx;
   }
   /* Basic drawing methods */
-  drawLine(t, s, i = "lightgrey") {
-    this.ctx.strokeStyle = i, this.ctx.beginPath(), this.ctx.moveTo(t.x, t.y), this.ctx.lineTo(s.x, s.y), this.ctx.stroke(), this.ctx.closePath();
+  drawLine(p1, p2, colour = "lightgrey") {
+    this.ctx.strokeStyle = colour;
+    this.ctx.beginPath();
+    this.ctx.moveTo(p1.x, p1.y);
+    this.ctx.lineTo(p2.x, p2.y);
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
-  drawPoints(t, s, i, r) {
-    t.forEach((e) => this.drawPoint(e, s, i, r));
+  drawPoints(points, r, colour, fill) {
+    points.forEach((p) => this.drawPoint(p, r, colour, fill));
   }
-  drawPoint(t, s = 3.5, i = "black", r = "transparent") {
-    this.ctx.strokeStyle = i, this.ctx.fillStyle = r, this.ctx.beginPath(), this.ctx.arc(t.x, t.y, s, 0, 2 * Math.PI), this.ctx.fill(), this.ctx.stroke(), this.ctx.closePath();
+  drawPoint(p, r = 3.5, colour = "black", fill = "transparent") {
+    this.ctx.strokeStyle = colour;
+    this.ctx.fillStyle = fill;
+    this.ctx.beginPath();
+    this.ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
+    this.ctx.fill();
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
-  drawCircle(t, s = "red", i = "transparent") {
-    this.ctx.strokeStyle = s, this.ctx.fillStyle = i, this.ctx.beginPath(), this.ctx.arc(t.x, t.y, t.r, 0, 2 * Math.PI), this.ctx.fill(), this.ctx.stroke(), this.ctx.closePath();
+  drawCircle(circle, colour = "red", fill = "transparent") {
+    this.ctx.strokeStyle = colour;
+    this.ctx.fillStyle = fill;
+    this.ctx.beginPath();
+    this.ctx.arc(circle.x, circle.y, circle.r, 0, 2 * Math.PI);
+    this.ctx.fill();
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
-  drawSkeleton(t, s) {
-    var i = t.points;
-    this.drawLine(i[0], i[1]), i.length === 3 ? this.drawLine(i[1], i[2]) : i.length === 4 && this.drawLine(i[2], i[3]), this.drawPoints(i, 3.5, s);
+  drawSkeleton(curve, colour) {
+    var pts = curve.points;
+    this.drawLine(pts[0], pts[1]);
+    if (pts.length === 3) {
+      this.drawLine(pts[1], pts[2]);
+    } else if (pts.length === 4) {
+      this.drawLine(pts[2], pts[3]);
+    }
+    this.drawPoints(pts, 3.5, colour);
   }
-  drawCurve(t, s = "black", i = 0.1) {
-    this.ctx.strokeStyle = s, this.ctx.beginPath();
-    var r = t.points;
-    this.ctx.moveTo(r[0].x, r[0].y), t.curvepoints.length == 0 && t.computeCurvePoints(), this.drawPoints(t.curvepoints, i, s), this.ctx.stroke(), this.ctx.closePath();
+  drawCurve(curve, colour = "black", r = 0.1) {
+    this.ctx.strokeStyle = colour;
+    this.ctx.beginPath();
+    var pts = curve.points;
+    this.ctx.moveTo(pts[0].x, pts[0].y);
+    if (curve.curvepoints.length == 0) {
+      curve.computeCurvePoints();
+    }
+    this.drawPoints(curve.curvepoints, r, colour);
+    this.ctx.stroke();
+    this.ctx.closePath();
   }
-  drawText(t, s, i = "black") {
-    s = s || { x: 0, y: 0 }, this.ctx.fillStyle = i, this.ctx.fillText(t, s.x, s.y);
+  drawText(text, offset, colour = "black") {
+    offset = offset || { x: 0, y: 0 };
+    this.ctx.fillStyle = colour;
+    this.ctx.fillText(text, offset.x, offset.y);
   }
   /* Additional drawing methods for library usage */
-  drawLookupTable(t, s = 3, i = "black") {
-    this.drawPoints(t._lut, s, i, "white");
+  drawLookupTable(curve, r = 3, colour = "black") {
+    this.drawPoints(curve._lut, r, colour, "white");
   }
-  drawLength(t, s = "red") {
-    let i = t.offset(-10), r = i.length - 1;
-    i.forEach((e, a) => {
-      if (this.drawCurve(e, s), a === r) {
-        let n = t.offset(0.95, -15), l = e.get(1), w = t.offset(0.95, -5);
-        this.drawLine(n, l, s), this.drawLine(l, w, s);
-        let b = (100 * t.len | 0) / 100 + "px";
-        this.drawText(b, { x: l.x + 7, y: l.y - 3 });
+  drawLength(curve, colour = "red") {
+    let offset = curve.offset(-10);
+    let last = offset.length - 1;
+    offset.forEach((c, idx) => {
+      this.drawCurve(c, colour);
+      if (idx === last) {
+        let p1 = curve.offset(0.95, -15);
+        let p2 = c.get(1);
+        let p3 = curve.offset(0.95, -5);
+        this.drawLine(p1, p2, colour);
+        this.drawLine(p2, p3, colour);
+        let label = (100 * curve.len | 0) / 100 + "px";
+        this.drawText(label, { x: p2.x + 7, y: p2.y - 3 });
       }
     });
   }
-  drawCurvePoint(t, s = 5, i = "red") {
-    this.drawPoint(t.p, s, i);
+  drawCurvePoint(curve, r = 5, colour = "red") {
+    this.drawPoint(curve.p, r, colour);
   }
-  drawTangent(t, s = "red") {
-    var i = t.get(t.dv.t), r = t.dv;
-    this.drawPoint(i, 2.5, s, "white"), this.drawLine(i, { x: i.x + r.x, y: i.y + r.y }, s);
+  drawTangent(curve, colour = "red") {
+    var pt = curve.get(curve.dv.t);
+    var dv = curve.dv;
+    this.drawPoint(pt, 2.5, colour, "white");
+    this.drawLine(pt, { x: pt.x + dv.x, y: pt.y + dv.y }, colour);
   }
-  drawNormal(t, s = 40, i = "red") {
-    const r = t.norm, e = t.get(r.t);
-    this.drawPoint(e, 2.5, i, "white"), this.drawLine(e, { x: e.x + s * r.x, y: e.y + s * r.y }, i);
+  drawNormal(curve, d = 40, colour = "red") {
+    const n = curve.norm, pt = curve.get(n.t);
+    this.drawPoint(pt, 2.5, colour, "white");
+    this.drawLine(pt, { x: pt.x + d * n.x, y: pt.y + d * n.y }, colour);
   }
-  drawSplittedCurve(t, s = "red") {
-    t.subc.c ? (this.drawCurve(t.subc.c[0], s), this.drawCurve(t.subc.c[1], s), this.drawPoint(t.get(t.subc.t), 3, s)) : (this.drawCurve(t.subc.v, s), this.drawPoint(t.get(t.subc.t1), 3, s), this.drawPoint(t.get(t.subc.t2), 3, s));
+  drawSplittedCurve(curve, colour = "red") {
+    if (curve.subc.c) {
+      this.drawCurve(curve.subc.c[0], colour);
+      this.drawCurve(curve.subc.c[1], colour);
+      this.drawPoint(curve.get(curve.subc.t), 3, colour);
+    } else {
+      this.drawCurve(curve.subc.v, colour);
+      this.drawPoint(curve.get(curve.subc.t1), 3, colour);
+      this.drawPoint(curve.get(curve.subc.t2), 3, colour);
+    }
   }
-  drawCurveExtremas(t, s = 3, i = "red") {
-    this.ctx.strokeStyle = i, t.extrs.values.forEach((r) => {
-      let e = t.get(r);
-      this.drawPoint(e, s, i);
+  drawCurveExtremas(curve, r = 3, colour = "red") {
+    this.ctx.strokeStyle = colour;
+    curve.extrs.values.forEach((t) => {
+      let extremaPoint = curve.get(t);
+      this.drawPoint(extremaPoint, r, colour);
     });
   }
-  drawInflectionPoints(t, s = 3, i = "red") {
-    this.ctx.strokeStyle = i, t.infl.forEach((r) => {
-      let e = t.get(r);
-      this.drawPoint(e, s, i);
+  drawInflectionPoints(curve, r = 3, colour = "red") {
+    this.ctx.strokeStyle = colour;
+    curve.infl.forEach((t) => {
+      let inflectionPoint = curve.get(t);
+      this.drawPoint(inflectionPoint, r, colour);
     });
   }
-  drawCurvature(t, s = "red") {
-    const i = t.kr.t, r = t.kr.r, e = t.get(i), a = t.normal(i);
-    this.drawLine(e, { x: e.x + a.x * r, y: e.y + a.y * r }, s);
+  drawCurvature(curve, colour = "red") {
+    const t = curve.kr.t, r = curve.kr.r, p = curve.get(t), n = curve.normal(t);
+    this.drawLine(p, { x: p.x + n.x * r, y: p.y + n.y * r }, colour);
   }
-  drawBoundingBox(t, s = "red") {
-    this.ctx.strokeStyle = s, this.ctx.beginPath(), this.ctx.moveTo(t.bb.x.min, t.bb.y.min), this.ctx.lineTo(t.bb.x.min, t.bb.y.max), this.ctx.lineTo(t.bb.x.max, t.bb.y.max), this.ctx.lineTo(t.bb.x.max, t.bb.y.min), this.ctx.closePath(), this.ctx.stroke();
+  drawBoundingBox(curve, colour = "red") {
+    this.ctx.strokeStyle = colour;
+    this.ctx.beginPath();
+    this.ctx.moveTo(curve.bb.x.min, curve.bb.y.min);
+    this.ctx.lineTo(curve.bb.x.min, curve.bb.y.max);
+    this.ctx.lineTo(curve.bb.x.max, curve.bb.y.max);
+    this.ctx.lineTo(curve.bb.x.max, curve.bb.y.min);
+    this.ctx.closePath();
+    this.ctx.stroke();
   }
-  drawHullPoints(t, s = "red") {
-    const i = t.hullp;
-    this.ctx.strokeStyle = s, this.ctx.beginPath(), i.length === 6 ? (this.ctx.moveTo(i[0].x, i[0].y), this.ctx.lineTo(i[1].x, i[1].y), this.ctx.lineTo(i[2].x, i[2].y), this.ctx.moveTo(i[3].x, i[3].y), this.ctx.lineTo(i[4].x, i[4].y)) : (this.ctx.moveTo(i[0].x, i[0].y), this.ctx.lineTo(i[1].x, i[1].y), this.ctx.lineTo(i[2].x, i[2].y), this.ctx.lineTo(i[3].x, i[3].y), this.ctx.moveTo(i[4].x, i[4].y), this.ctx.lineTo(i[5].x, i[5].y), this.ctx.lineTo(i[6].x, i[6].y), this.ctx.moveTo(i[7].x, i[7].y), this.ctx.lineTo(i[8].x, i[8].y)), this.ctx.stroke(), this.ctx.closePath(), this.drawPoint(i.slice(-1)[0], 4.5, s);
+  drawHullPoints(curve, colour = "red") {
+    const hull = curve.hullp;
+    this.ctx.strokeStyle = colour;
+    this.ctx.beginPath();
+    if (hull.length === 6) {
+      this.ctx.moveTo(hull[0].x, hull[0].y);
+      this.ctx.lineTo(hull[1].x, hull[1].y);
+      this.ctx.lineTo(hull[2].x, hull[2].y);
+      this.ctx.moveTo(hull[3].x, hull[3].y);
+      this.ctx.lineTo(hull[4].x, hull[4].y);
+    } else {
+      this.ctx.moveTo(hull[0].x, hull[0].y);
+      this.ctx.lineTo(hull[1].x, hull[1].y);
+      this.ctx.lineTo(hull[2].x, hull[2].y);
+      this.ctx.lineTo(hull[3].x, hull[3].y);
+      this.ctx.moveTo(hull[4].x, hull[4].y);
+      this.ctx.lineTo(hull[5].x, hull[5].y);
+      this.ctx.lineTo(hull[6].x, hull[6].y);
+      this.ctx.moveTo(hull[7].x, hull[7].y);
+      this.ctx.lineTo(hull[8].x, hull[8].y);
+    }
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.drawPoint(hull.slice(-1)[0], 4.5, colour);
   }
-  drawProjection(t, s = "red") {
-    this.drawLine(t.projp, t.projp.point, s);
+  drawProjection(curve, colour = "red") {
+    this.drawLine(curve.projp, curve.projp.point, colour);
   }
-  drawOffsetCurve(t, s) {
-    t.offst.forEach((i, r) => this.drawCurve(i, s || h(this, x)[r]));
+  drawOffsetCurve(curve, colour) {
+    curve.offst.forEach((c, i) => this.drawCurve(c, colour || __privateGet(this, _rainbowColors)[i]));
   }
-  drawOffsetPoint(t, s = 4, i = "red") {
-    this.drawPoint(t.offstcoords, s, i, "white");
+  drawOffsetPoint(curve, r = 4, colour = "red") {
+    this.drawPoint(curve.offstcoords, r, colour, "white");
   }
-  drawReducedCurve(t, s) {
-    t.redc.forEach((i, r) => {
-      r > 0 && this.drawPoint(i.points[0], 3), this.drawCurve(i, s || h(this, x)[r]);
+  drawReducedCurve(curve, colour) {
+    curve.redc.forEach((c, i) => {
+      if (i > 0)
+        this.drawPoint(c.points[0], 3);
+      this.drawCurve(c, colour || __privateGet(this, _rainbowColors)[i]);
     });
   }
-  drawCircularArcs(t, s) {
-    t.carcs.forEach((i, r) => this.drawArc(i, s || h(this, d)[r]));
+  drawCircularArcs(curve, colour) {
+    curve.carcs.forEach((arc, i) => this.drawArc(arc, colour || __privateGet(this, _shadeColors)[i]));
   }
-  drawArc(t, s) {
-    this.ctx.fillStyle = s, this.ctx.beginPath(), this.ctx.moveTo(t.x, t.y), this.ctx.arc(t.x, t.y, t.r, t.s, t.e), this.ctx.fill(), this.ctx.closePath();
+  drawArc(arc, colour) {
+    this.ctx.fillStyle = colour;
+    this.ctx.beginPath();
+    this.ctx.moveTo(arc.x, arc.y);
+    this.ctx.arc(arc.x, arc.y, arc.r, arc.s, arc.e);
+    this.ctx.fill();
+    this.ctx.closePath();
   }
-  drawScaledCurve(t, s = "black") {
-    this.drawReducedCurve(t.redc, s);
-    for (var i = 0; i <= 6; i++)
-      this.drawCurve(t.scaled[i], s);
+  drawScaledCurve(curve, colour = "black") {
+    this.drawReducedCurve(curve.redc, colour);
+    for (var k = 0; k <= 6; k++) {
+      this.drawCurve(curve.scaled[k], colour);
+    }
   }
-  drawOutline(t, s = "red") {
-    t.outl.curves.forEach((i) => this.drawCurve(i, s));
+  drawOutline(curve, colour = "red") {
+    curve.outl.curves.forEach((c) => this.drawCurve(c, colour));
   }
-  drawShapedOutline(t, s = "red", i) {
-    t.shapeoutl.forEach((r, e) => this.drawShape(r, s, i || h(this, d)[e]));
+  drawShapedOutline(curve, colour = "red", fill) {
+    curve.shapeoutl.forEach((s, i) => this.drawShape(s, colour, fill || __privateGet(this, _shadeColors)[i]));
   }
-  drawShape(t, s, i) {
-    this.ctx.strokeStyle = s, this.ctx.fillStyle = i;
-    var r = t.forward.points.length - 1, e = t.startcap.points.length, a = t.endcap.points.length;
-    this.ctx.beginPath(), this.ctx.moveTo(
-      t.startcap.points[0].x,
-      t.startcap.points[0].y
-    ), this.ctx.lineTo(
-      t.startcap.points[e - 1].x,
-      t.startcap.points[e - 1].y
-    ), r === 3 ? this.ctx.bezierCurveTo(
-      t.forward.points[1].x,
-      t.forward.points[1].y,
-      t.forward.points[2].x,
-      t.forward.points[2].y,
-      t.forward.points[3].x,
-      t.forward.points[3].y
-    ) : this.ctx.quadraticCurveTo(
-      t.forward.points[1].x,
-      t.forward.points[1].y,
-      t.forward.points[2].x,
-      t.forward.points[2].y
-    ), this.ctx.lineTo(
-      t.endcap.points[a - 1].x,
-      t.endcap.points[a - 1].y
-    ), r === 3 ? this.ctx.bezierCurveTo(
-      t.back.points[1].x,
-      t.back.points[1].y,
-      t.back.points[2].x,
-      t.back.points[2].y,
-      t.back.points[3].x,
-      t.back.points[3].y
-    ) : this.ctx.quadraticCurveTo(
-      t.back.points[1].x,
-      t.back.points[1].y,
-      t.back.points[2].x,
-      t.back.points[2].y
-    ), this.ctx.closePath(), this.ctx.fill(), this.ctx.stroke();
+  drawShape(shape, colour, fill) {
+    this.ctx.strokeStyle = colour;
+    this.ctx.fillStyle = fill;
+    var order = shape.forward.points.length - 1;
+    var scl = shape.startcap.points.length;
+    var ecl = shape.endcap.points.length;
+    this.ctx.beginPath();
+    this.ctx.moveTo(
+      shape.startcap.points[0].x,
+      shape.startcap.points[0].y
+    );
+    this.ctx.lineTo(
+      shape.startcap.points[scl - 1].x,
+      shape.startcap.points[scl - 1].y
+    );
+    if (order === 3) {
+      this.ctx.bezierCurveTo(
+        shape.forward.points[1].x,
+        shape.forward.points[1].y,
+        shape.forward.points[2].x,
+        shape.forward.points[2].y,
+        shape.forward.points[3].x,
+        shape.forward.points[3].y
+      );
+    } else {
+      this.ctx.quadraticCurveTo(
+        shape.forward.points[1].x,
+        shape.forward.points[1].y,
+        shape.forward.points[2].x,
+        shape.forward.points[2].y
+      );
+    }
+    this.ctx.lineTo(
+      shape.endcap.points[ecl - 1].x,
+      shape.endcap.points[ecl - 1].y
+    );
+    if (order === 3) {
+      this.ctx.bezierCurveTo(
+        shape.back.points[1].x,
+        shape.back.points[1].y,
+        shape.back.points[2].x,
+        shape.back.points[2].y,
+        shape.back.points[3].x,
+        shape.back.points[3].y
+      );
+    } else {
+      this.ctx.quadraticCurveTo(
+        shape.back.points[1].x,
+        shape.back.points[1].y,
+        shape.back.points[2].x,
+        shape.back.points[2].y
+      );
+    }
+    this.ctx.closePath();
+    this.ctx.fill();
+    this.ctx.stroke();
   }
-  drawSelfIntersection(t, s = 4, i = "red") {
-    t.order != 2 && t.intersections.self.forEach((r) => {
-      var e = r.split("/").map((n) => parseFloat(n)), a = t.get(e[0]);
-      this.drawPoint(a, s, i, "white");
+  drawSelfIntersection(curve, r = 4, colour = "red") {
+    if (curve.order == 2)
+      return;
+    curve.intersections.self.forEach((pair) => {
+      var t = pair.split("/").map((v) => parseFloat(v));
+      var point = curve.get(t[0]);
+      this.drawPoint(point, r, colour, "white");
     });
   }
-  drawLineIntersection(t, s = 4, i = "red") {
-    t.intersections.line.forEach((r) => {
-      var e = t.get(r);
-      this.drawPoint(e, s, i, "white");
+  drawLineIntersection(curve, r = 4, colour = "red") {
+    curve.intersections.line.forEach((t) => {
+      var point = curve.get(t);
+      this.drawPoint(point, r, colour, "white");
     });
   }
-  drawCurvesIntersection(t, s = 4, i = "red") {
-    t.intersections.curve.forEach((r) => {
-      var e = r.split("/").map((n) => parseFloat(n)), a = t.get(e[0]);
-      this.drawPoint(a, s, i, "white");
+  drawCurvesIntersection(curve, r = 4, colour = "red") {
+    curve.intersections.curve.forEach((pair) => {
+      var t = pair.split("/").map((v) => parseFloat(v));
+      var point = curve.get(t[0]);
+      this.drawPoint(point, r, colour, "white");
     });
   }
 }
-x = new WeakMap(), d = new WeakMap();
+_rainbowColors = new WeakMap();
+_shadeColors = new WeakMap();
 export {
-  g as default
+  Drawing as default
 };
 //# sourceMappingURL=drawing.js.map
