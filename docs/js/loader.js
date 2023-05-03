@@ -3,6 +3,10 @@ const filesNames = [
   "quadratic",
   "cubic",
 
+  "linearLength",
+  "quadraticLength",
+  "cubicLength",
+
   "linearLookupTable",
   "quadraticLookupTable",
   "cubicLookupTable",

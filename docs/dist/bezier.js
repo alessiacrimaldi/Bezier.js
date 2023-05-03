@@ -471,7 +471,7 @@ class G {
     this.curves.push(n), this._3d = this._3d || n._3d;
   }
   length() {
-    return this.len = this.curves.map(function(n) {
+    return this.curves.map(function(n) {
       return n.length();
     }).reduce(function(n, i) {
       return n + i;
@@ -607,7 +607,7 @@ class v {
     this.clockwise = i > 0;
   }
   length() {
-    return a.length(this.derivative.bind(this));
+    return this.len = a.length(this.derivative.bind(this));
   }
   static getABC(n = 2, i, e, s, o = 0.5) {
     const r = a.projectionratio(o, n), u = 1 - r, f = {
@@ -685,7 +685,7 @@ class v {
   }
   normal(n) {
     const i = this._3d ? this.__normal3(n) : this.__normal2(n);
-    return this.n = { ...i, t: n }, i;
+    return this.norm = { ...i, t: n }, i;
   }
   __normal2(n) {
     const i = this.derivative(n), e = D(i.x * i.x + i.y * i.y);
