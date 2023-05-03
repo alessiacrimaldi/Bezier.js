@@ -30,6 +30,9 @@ const filesNames = [
   "quadraticBoundingBox",
   "cubicBoudingBox",
 
+  "quadraticTightBoundingBox",
+  "cubicTightBoundingBox",
+
   "linearOffset",
   "quadraticOffset",
   "cubicOffset",

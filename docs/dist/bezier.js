@@ -393,6 +393,25 @@ const utils = {
     }
     return { min: min2, mid: (min2 + max2) / 2, max: max2, size: max2 - min2 };
   },
+  translate: function(points) {
+    let m = points[0];
+    return points.map((v) => {
+      return {
+        x: v.x - m.x,
+        y: v.y - m.y
+      };
+    });
+  },
+  rotate: function(points) {
+    const last = points.length - 1, dx = points[last].x, dy = points[last].y, a = atan2(dy, dx);
+    return points.map((v) => {
+      return {
+        a,
+        x: v.x * cos(-a) - v.y * sin(-a),
+        y: v.x * sin(-a) + v.y * cos(-a)
+      };
+    });
+  },
   align: function(points, line) {
     const tx = line.p1.x, ty = line.p1.y, a = -atan2(line.p2.y - ty, line.p2.x - tx), d = function(v) {
       return {
@@ -1114,6 +1133,16 @@ class Bezier {
       }.bind(this)
     );
     return this.bb = result;
+  }
+  tightbbox() {
+    const translated = utils.translate(this.points), rotated = utils.rotate(translated), rtcurve = this.align(this.points), result = {};
+    rtcurve.bbox();
+    const minx = rtcurve.bb.x.min, maxx = rtcurve.bb.x.max, miny = rtcurve.bb.y.min, maxy = rtcurve.bb.y.max, t2 = this.points[0], a = rotated[0].a;
+    result.p1 = { x: t2.x + minx * cos(a) - miny * sin(a), y: t2.y + minx * sin(a) + miny * cos(a) };
+    result.p2 = { x: t2.x + maxx * cos(a) - miny * sin(a), y: t2.y + maxx * sin(a) + miny * cos(a) };
+    result.p3 = { x: t2.x + maxx * cos(a) - maxy * sin(a), y: t2.y + maxx * sin(a) + maxy * cos(a) };
+    result.p4 = { x: t2.x + minx * cos(a) - maxy * sin(a), y: t2.y + minx * sin(a) + maxy * cos(a) };
+    return this.tbb = result;
   }
   overlaps(curve) {
     const lbbox = this.bbox(), tbbox = curve.bbox();

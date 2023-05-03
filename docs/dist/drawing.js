@@ -187,6 +187,12 @@ class Drawing {
     this.ctx.closePath();
     this.ctx.stroke();
   }
+  drawTightBBox(curve, colour = "red") {
+    this.drawLine(curve.tbb.p1, curve.tbb.p2, colour);
+    this.drawLine(curve.tbb.p2, curve.tbb.p3, colour);
+    this.drawLine(curve.tbb.p3, curve.tbb.p4, colour);
+    this.drawLine(curve.tbb.p4, curve.tbb.p1, colour);
+  }
   drawHullPoints(curve, colour = "red") {
     const hull = curve.hullp;
     this.ctx.strokeStyle = colour;
