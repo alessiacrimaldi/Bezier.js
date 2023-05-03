@@ -3,9 +3,9 @@ const filesNames = [
   "quadratic",
   "cubic",
 
-  "linearLookUpTable",
-  "quadraticLookUpTable",
-  "cubicLookUpTable",
+  "linearLookupTable",
+  "quadraticLookupTable",
+  "cubicLookupTable",
 
   "linearTangent",
   "quadraticTangent",
