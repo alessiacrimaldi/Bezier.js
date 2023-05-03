@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,15 +13,15 @@ const demo = new CodeArea(250, 200, "#boundingbox", "Linear", () => {
 
 
 /* User Code */
-let curve, bbox;
+let curve;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
     curve = new Bezier({ x: 60, y: 60 }, { x: 190, y: 120 });
-    bbox = calculation.calculateBoundingBox(curve);
+    curve.bbox();
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        bbox = calculation.calculateBoundingBox(curve);
+        curve.bbox();
         draw();
     })
 }
@@ -31,6 +30,6 @@ setup();
 const draw = () => {
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
-    drawing.drawBoundingBox(bbox);
+    drawing.drawBoundingBox(curve);
 }
 draw();

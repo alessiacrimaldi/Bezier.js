@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,7 +13,7 @@ const params = [
         value: 0.5,
         step: 0.01,
         handler: (new_value) => {
-            calculation.calculateTangent(curve, t = new_value);
+            curve.derivative(t = new_value);
             demo.clear();
             draw();
         }
@@ -33,10 +32,10 @@ const drawing = new Drawing(demo.context)
 
 const setup = () => {
     curve = new Bezier(160, 50, 90, 40, 115, 160);
-    calculation.calculateTangent(curve, t = 0.5);
+    curve.derivative(t = 0.5);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        calculation.calculateTangent(curve, t);
+        curve.derivative(t);
         draw();
     })
 }

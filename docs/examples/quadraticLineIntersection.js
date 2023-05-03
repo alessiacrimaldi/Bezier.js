@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,16 +13,16 @@ const demo = new CodeArea(250, 200, "#lineintersection", "Quadratic", () => {
 
 
 /* User Code */
-let curve, line, intersection;
+let curve, line;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
     curve = new Bezier(140, 160, 140, 35, 70, 90);
-    line = {p1: {x: 40, y: 25 }, p2:{ x: 210, y: 170 }};
-    intersection = calculation.calculateIntersection(curve, line);
+    line = { p1: { x: 40, y: 25 }, p2: { x: 210, y: 170 } };
+    curve.intersects(line);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        intersection = calculation.calculateIntersection(curve, line);
+        curve.intersects(line);
         draw();
     })
 }
@@ -34,6 +33,6 @@ const draw = () => {
     drawing.drawCurve(curve);
     drawing.drawLine(line.p1, line.p2, "red");
     drawing.drawPoints([line.p1, line.p2], 2.5, "red");
-    drawing.drawLineIntersection(curve, intersection);
+    drawing.drawLineIntersection(curve);
 }
 draw();

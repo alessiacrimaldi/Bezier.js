@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,7 +13,7 @@ const demo = new CodeArea(250, 200, "#pointprojection", "Cubic", () => {
 
 
 /* User Code */
-let curve;
+let curve, mousep;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
@@ -33,9 +32,9 @@ const draw = () => {
 draw();
 
 demo.canvas.addEventListener("mousemove", (evt) => {
+    mousep = { x: evt.offsetX, y: evt.offsetY };
+    curve.project(mousep);
     demo.clear();
     draw();
-    let mousep = { x: evt.offsetX, y: evt.offsetY };
-    let curvep = calculation.calculateClosestPoint(curve, mousep);
-    drawing.drawProjection(curvep, mousep, "orange");
+    drawing.drawProjection(curve, "orange");
 });

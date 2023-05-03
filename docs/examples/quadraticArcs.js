@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,7 +13,7 @@ const params = [
         value: 0.5,
         step: 0.05,
         handler: (new_value) => {
-            arcs = calculation.calculateArcs(curve, error = new_value);
+            curve.arcs(error = new_value);
             demo.clear();
             draw();
         }
@@ -28,15 +27,15 @@ const demo = new CodeArea(250, 200, "#arcs", "Quadratic", () => {
 
 
 /* User Code */
-let curve, arcs, error;
+let curve, error;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
     curve = new Bezier(80, 35, 180, 50, 180, 160);
-    arcs = calculation.calculateArcs(curve, error = 0.5);
+    curve.arcs(error = 0.5);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        arcs = calculation.calculateArcs(curve, error);
+        curve.arcs(error);
         draw();
     })
 }
@@ -45,6 +44,6 @@ setup();
 const draw = () => {
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
-    drawing.drawCircularArcs(arcs);
+    drawing.drawCircularArcs(curve);
 }
 draw();

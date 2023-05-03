@@ -8,7 +8,6 @@ export default defineConfig({
         lib: {
             entry: {
                 bezier: "./lib/bezier.js",
-                calculation: "./lib/calculation.js",
                 drawing: "./lib/drawing.js",
                 interaction: "./lib/interaction.js"
             },

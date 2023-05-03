@@ -1,6 +1,5 @@
 import CodeArea from "../js/CodeArea.js";
 import { Bezier } from "../dist/bezier.js";
-import * as calculation from "../dist/calculation.js";
 import Drawing from "../dist/drawing.js";
 import handleInteraction from "../dist/interaction.js";
 
@@ -14,9 +13,9 @@ const params = [
         value: 0.5,
         step: 0.01,
         handler: (new_value) => {
-            kr = calculation.calculateCurvature(curve, t = new_value);
-            p = calculation.getCurvePoint(curve, t = new_value);
-            n = calculation.calculateNormal(curve, t = new_value);
+            kr = curve.curvature(t = new_value);
+            p = curve.get(t = new_value);
+            n = curve.normal(t = new_value);
             c = { x: p.x + n.x * kr.r, y: p.y + n.y * kr.r };
             circ = { x: c.x, y: c.y, r: Math.abs(kr.r) };
             demo.clear();
@@ -38,11 +37,11 @@ const drawing = new Drawing(demo.context)
 const setup = () => {
     curve = new Bezier(60, 40, 180, 30, 160, 160);
     // curve curvature in t parameter
-    kr = calculation.calculateCurvature(curve, t = 0.5);
+    kr = curve.curvature(t = 0.5);
     // on curve point
-    p = calculation.getCurvePoint(curve, t = 0.5);
+    p = curve.get(t = 0.5);
     // curve normal in that point
-    n = calculation.calculateNormal(curve, t = 0.5);
+    n = curve.normal(t = 0.5);
     // center of the circumference 
     c = { x: p.x + n.x * kr.r, y: p.y + n.y * kr.r };
     // circumference along the curve
@@ -50,9 +49,9 @@ const setup = () => {
 
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        kr = calculation.calculateCurvature(curve, t);
-        p = calculation.getCurvePoint(curve, t);
-        n = calculation.calculateNormal(curve, t);
+        kr = curve.curvature(t);
+        p = curve.get(t);
+        n = curve.normal(t);
         c = { x: p.x + n.x * kr.r, y: p.y + n.y * kr.r };
         circ = { x: c.x, y: c.y, r: Math.abs(kr.r) };
         draw();
@@ -63,7 +62,7 @@ setup();
 const draw = () => {
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
-    drawing.drawCurvature(curve, kr, t);
+    drawing.drawCurvature(curve);
     drawing.drawCircle(circ);
     drawing.drawPoint(p, 3, "red", "white");
     drawing.drawPoint(c, 3, "red", "white");

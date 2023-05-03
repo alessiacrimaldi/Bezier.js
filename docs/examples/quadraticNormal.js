@@ -5,23 +5,37 @@ import handleInteraction from "../dist/interaction.js";
 
 
 /* Documentation Example */
-const demo = new CodeArea(250, 200, "#selfintersection", "Cubic", () => {
+const params = [
+    {
+        name: "t",
+        min: 0,
+        max: 1,
+        value: 0.5,
+        step: 0.01,
+        handler: (new_value) => {
+            curve.normal(t = new_value);
+            demo.clear();
+            draw();
+        }
+    },
+]
+const demo = new CodeArea(250, 200, "#normal", "Quadratic", () => {
     setup();
     demo.clear();
     draw();
-});
+}, params);
 
 
 /* User Code */
-let curve;
+let curve, t;
 const drawing = new Drawing(demo.context)
 
 const setup = () => {
-    curve = new Bezier(200, 150, 40, 90, 170, 20, 170, 180);
-    curve.intersects();
+    curve = new Bezier(160, 50, 90, 40, 115, 160);
+    curve.normal(t = 0.5);
     // makes the curve interactive
     handleInteraction(demo.canvas, curve, () => {
-        curve.intersects();
+        curve.normal(t);
         draw();
     })
 }
@@ -30,6 +44,6 @@ setup();
 const draw = () => {
     drawing.drawSkeleton(curve);
     drawing.drawCurve(curve);
-    drawing.drawSelfIntersection(curve);
+    drawing.drawNormal(curve);
 }
 draw();

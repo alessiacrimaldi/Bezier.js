@@ -3,9 +3,35 @@ const filesNames = [
   "quadratic",
   "cubic",
 
+  "linearLookUpTable",
+  "quadraticLookUpTable",
+  "cubicLookUpTable",
+
+  "linearTangent",
+  "quadraticTangent",
+  "cubicTangent",
+
+  "linearNormal",
+  "quadraticNormal",
+  "cubicNormal",
+
+  "quadraticCurvature",
+  "cubicCurvature",
+
+  "linearProjection",
+  "quadraticProjection",
+  "cubicProjection",
+
   "linearBoundingBox",
   "quadraticBoundingBox",
   "cubicBoudingBox",
+
+  "linearOffset",
+  "quadraticOffset",
+  "cubicOffset",
+
+  "quadraticArcs",
+  "cubicArcs",
 
   "quadraticLineIntersection",
   "cubicLineIntersection",
@@ -17,24 +43,6 @@ const filesNames = [
   "cubicCubicIntersection",
 
   "cubicSelfIntersection",
-
-  "linearProjection",
-  "quadraticProjection",
-  "cubicProjection",
-
-  "linearOffset",
-  "quadraticOffset",
-  "cubicOffset",
-
-  "linearTangent",
-  "quadraticTangent",
-  "cubicTangent",
-
-  "quadraticCurvature",
-  "cubicCurvature",
-
-  "quadraticArcs",
-  "cubicArcs",
 
   "openPolyBezier",
   "closedPolyBezier"
