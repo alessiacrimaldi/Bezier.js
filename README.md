@@ -6,10 +6,11 @@ It is inspired by *[Bezier.js](https://pomax.github.io/bezierjs/)* and *[A Prime
 
 ## Installation
 There is a rolled-up version of the library files `bezier.js`, `drawing.js` and `interaction.js` in the dist directory. Just download those files and drop them into your JS asset dir. Then import them to use the libary functionalities.
+Example:
 ````
-import { Bezier } from "bezierjs/calculation";
-import Drawing from "bezierjs/drawing";
-import handleInteraction from "bezierjs/interaction";
+import { Bezier } from "../dist/bezier.js";
+import Drawing from "../dist/drawing.js";
+import handleInteraction from "../dist/interaction.js";
 ````
 
 ## Working on the code
