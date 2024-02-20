@@ -1,6 +1,6 @@
 # Bezier.js
 
-Bezier.js is a JavaScript library which provides an API for Bézier quadratic and cubic curves, useful in the context of 2D Web graphics.
+Bezier.js is a JavaScript library which provides an interactive API for Bézier quadratic and cubic curves, useful in the context of 2D Web graphics.
 
 It is inspired by *[Bezier.js](https://pomax.github.io/bezierjs/)* and *[A Primer on Bézier Curves](https://pomax.github.io/bezierinfo/)* by Pomax.
 
